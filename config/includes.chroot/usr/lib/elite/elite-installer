@@ -1,0 +1,18 @@
+#!/bin/bash
+# EliteLinux: запуск установщика Calamares из live-сессии (по образцу
+# calamares-install-debian). Live-пользователь имеет sudo без пароля.
+set -u
+
+# данные о железе для экрана приветствия и слайдов
+sudo mkdir -p /run/elite
+sudo /usr/lib/elite/elite-hwinfo --json | sudo tee /run/elite/hardware.json >/dev/null
+
+# fstab live-системы мешает разметке
+sudo mv /etc/fstab /etc/fstab.orig.calamares 2>/dev/null
+
+xhost +si:localuser:root >/dev/null
+# QML_XHR_ALLOW_FILE_READ — чтобы слайды могли прочитать /run/elite/hardware.json
+sudo DISPLAY="$DISPLAY" QML_XHR_ALLOW_FILE_READ=1 QT_AUTO_SCREEN_SCALE_FACTOR=1 calamares
+xhost -si:localuser:root >/dev/null
+
+sudo mv /etc/fstab.orig.calamares /etc/fstab 2>/dev/null

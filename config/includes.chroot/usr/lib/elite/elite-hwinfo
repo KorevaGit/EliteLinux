@@ -1,0 +1,52 @@
+#!/bin/bash
+# EliteLinux: паспорт ПК. Без аргументов — текст, с --json — JSON (для слайдов установщика).
+# Исключает установочную флешку из списка дисков.
+set -u
+export LC_NUMERIC=C   # точка в дробях — иначе ломается JSON
+
+dmi() { tr -d '\n' < "/sys/class/dmi/id/$1" 2>/dev/null | sed 's/  */ /g'; }
+clean() { set -- "$(echo "$1" | sed 's/^ *//; s/ *$//')"; case "$1" in ""|"To be filled by O.E.M."|"Default string"|"System Product Name"|"None"|"0") echo "—" ;; *) echo "$1" ;; esac; }
+jstr() { printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'; }
+
+cpu=$(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2- | sed 's/^ *//')
+cores=$(grep -c '^processor' /proc/cpuinfo)
+ram_kb=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
+ram_gb=$(awk -v k="$ram_kb" 'BEGIN {printf "%.1f", k/1048576}')
+board="$(clean "$(dmi board_vendor) $(dmi board_name)")"
+serial="$(clean "$(dmi board_serial)")"
+[ "$serial" = "—" ] && serial="$(clean "$(dmi product_serial)")"
+gpu=$(lspci 2>/dev/null | grep -E 'VGA|3D|Display' | head -1 | cut -d: -f3- | sed 's/^ *//')
+
+live_disk=$(lsblk -no PKNAME "$(findmnt -no SOURCE /run/live/medium 2>/dev/null)" 2>/dev/null | head -1)
+disks=(); while read -r name size rota model; do
+    [ "$name" = "$live_disk" ] && continue
+    kind=$([ "$rota" = 0 ] && echo SSD || echo HDD)
+    disks+=("$name|$size|$kind|${model:-—}")
+done < <(lsblk -dnb -o NAME,SIZE,ROTA,MODEL -e 1,7,11 2>/dev/null | awk '{s=$2/1e9; m=""; for(i=4;i<=NF;i++) m=m (m?" ":"") $i; printf "%s %.0fГБ %s %s\n", $1, s, $3, m}')
+
+nics=(); for d in /sys/class/net/*; do
+    [ -e "$d/device" ] || continue
+    n=$(basename "$d"); kind=$([ -d "$d/wireless" ] && echo Wi-Fi || echo Ethernet)
+    nics+=("$n|$kind|$(cat "$d/address")")
+done
+
+if [ "${1:-}" = "--json" ]; then
+    printf '{"cpu":"%s","cores":%s,"ramGb":%s,"board":"%s","serial":"%s","gpu":"%s","disks":[' \
+        "$(jstr "$cpu")" "$cores" "$ram_gb" "$(jstr "$board")" "$(jstr "$serial")" "$(jstr "${gpu:-—}")"
+    sep=""; for d in "${disks[@]}"; do IFS='|' read -r n s k m <<<"$d"
+        printf '%s{"name":"%s","size":"%s","type":"%s","model":"%s"}' "$sep" "$n" "$s" "$k" "$(jstr "$m")"; sep=","; done
+    printf '],"nics":['
+    sep=""; for d in "${nics[@]}"; do IFS='|' read -r n k mac <<<"$d"
+        printf '%s{"name":"%s","type":"%s","mac":"%s"}' "$sep" "$n" "$k" "$mac"; sep=","; done
+    printf ']}\n'
+    exit 0
+fi
+
+echo "Паспорт ПК — $(cat /etc/hostname 2>/dev/null) — $(date '+%d.%m.%Y %H:%M')"
+echo "Процессор:   $cpu ($cores потоков)"
+echo "ОЗУ:         $ram_gb ГБ"
+echo "Плата:       $board"
+echo "Серийный №:  $serial"
+echo "Видеокарта:  ${gpu:-—}"
+for d in "${disks[@]}"; do IFS='|' read -r n s k m <<<"$d"; echo "Диск:        /dev/$n — $s, $k, $m"; done
+for d in "${nics[@]}"; do IFS='|' read -r n k mac <<<"$d"; echo "Сеть:        $n — $k, MAC $mac"; done

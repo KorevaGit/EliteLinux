@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Установить EliteLinux
+Comment=Установка EliteLinux на диск компьютера
+Exec=/usr/lib/elite/elite-installer
+Icon=/usr/share/pixmaps/elite-start.svg
+Terminal=false
+Categories=System;

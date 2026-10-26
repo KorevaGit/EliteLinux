@@ -1,0 +1,5 @@
+#!/bin/sh
+# Пункт меню флешки «Установить EliteLinux» передаёт ядру elite.install —
+# тогда установщик открывается сразу после входа live-пользователя.
+grep -qw elite.install /proc/cmdline && exec /usr/lib/elite/elite-installer
+exit 0

@@ -1,0 +1,9 @@
+[Desktop Entry]
+# У Яндекс Телемоста нет клиента для Linux — открываем веб-версию как приложение
+Name=Яндекс Телемост
+Comment=Видеовстречи Яндекс Телемост
+Exec=yandex-browser-stable --app=https://telemost.yandex.ru
+Icon=elite-telemost
+Terminal=false
+Type=Application
+Categories=Network;VideoConference;

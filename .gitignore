@@ -1,0 +1,34 @@
+# артефакты live-build
+/.build/
+/cache/
+/chroot/
+/binary/
+/chroot.*
+/binary.*
+/*.iso
+/*.contents
+/*.files
+/*.packages
+/build.log
+/config/binary
+/config/bootstrap
+/config/chroot
+/config/common
+/config/source
+/config/packages.chroot/
+# собираемое из theme/
+/theme/dist/
+/theme/Colloid-src/
+/config/includes.chroot/usr/share/themes/
+/config/includes.chroot/usr/share/icons/Elite/
+/config/includes.chroot/usr/share/plymouth/
+/config/includes.chroot/usr/share/backgrounds/
+/config/includes.chroot/usr/share/pixmaps/
+/.lock
+/installer_firmware_details.txt
+# хуки, которые lb config ставит ссылками на свои шаблоны (наши — 05xx)
+/config/hooks/live/
+/config/hooks/normal/[1-9][0-9][0-9][0-9]-*
+# секреты сборки (хэши паролей учёток) — вне репозитория, подкладываются при сборке
+/secrets/
+/config/includes.chroot/etc/elite/accounts

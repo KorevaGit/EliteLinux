@@ -1,0 +1,15 @@
+#!/bin/sh
+# EliteLinux: официальная сборка Telegram Desktop в /opt/telegram.
+set -e
+
+apt-get install -y --no-install-recommends curl xz-utils ca-certificates
+tmp="$(mktemp -d)"
+curl -fsSL --retry 3 -o "$tmp/tg.tar.xz" https://telegram.org/dl/desktop/linux
+tar -xJf "$tmp/tg.tar.xz" -C "$tmp"
+rm -rf /opt/telegram
+mv "$tmp/Telegram" /opt/telegram
+rm -rf "$tmp"
+# Пользователи без sudo: группа users может писать в /opt/telegram, чтобы
+# работало встроенное автообновление Telegram.
+chgrp -R users /opt/telegram
+chmod -R g+w /opt/telegram

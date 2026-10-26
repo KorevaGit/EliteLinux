@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Установщик EliteLinux (автозапуск)
+Exec=/usr/lib/elite/elite-installer-autostart
+NoDisplay=true
+OnlyShowIn=XFCE;

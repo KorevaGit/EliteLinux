@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=EliteLinux
+Description=Золотая корона на фоне обоев EliteLinux
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/elite
+ScriptFile=/usr/share/plymouth/themes/elite/elite.script

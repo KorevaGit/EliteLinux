@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 14 360 246">
+  <defs><linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="30" y1="20" x2="370" y2="255"><stop offset="0" stop-color="#e6c27a"/><stop offset="0.5" stop-color="#c9a25a"/><stop offset="1" stop-color="#a87d38"/></linearGradient>
+    <!-- внутренние линии логотипа вырезаны насквозь -->
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="280">
+      <rect width="400" height="280" fill="#fff"/>
+      <path d="M141.8 133.9 L200 168 L258.2 133.9 M141.8 133.9 L100 210 M258.2 133.9 L300 210" fill="none" stroke="#000" stroke-width="9" stroke-linecap="round"/>
+    </mask>
+  </defs>
+  <path d="M33 70 L141.8 133.9 L200 28 L258.2 133.9 L367 70 L300 210 L100 210 Z" fill="url(#gold)" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round" mask="url(#cut)"/>
+  <path d="M186 245 V204 H215 V245" fill="none" stroke="url(#gold)" stroke-width="9"/>
+  <path d="M90 247 H310" stroke="url(#gold)" stroke-width="10" stroke-linecap="round"/>
+</svg>

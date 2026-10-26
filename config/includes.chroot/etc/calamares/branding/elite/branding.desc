@@ -1,0 +1,38 @@
+# EliteLinux: оформление установщика — графит и золото, на весь экран
+---
+componentName:  elite
+welcomeStyleCalamares: false
+welcomeExpandingLogo: true
+windowExpanding: fullscreen
+windowSize: 1024px,700px
+windowPlacement: center
+sidebar: widget
+navigation: widget
+
+strings:
+    productName:         EliteLinux
+    shortProductName:    EliteLinux
+    version:             1.0
+    shortVersion:        1.0
+    versionedName:       EliteLinux 1.0
+    shortVersionedName:  EliteLinux 1.0
+    bootloaderEntryName: EliteLinux
+    productUrl:          ""
+    supportUrl:          ""
+    knownIssuesUrl:      ""
+    releaseNotesUrl:     ""
+    donateUrl:           ""
+
+images:
+    productLogo:    "logo.png"
+    productIcon:    "logo.png"
+    productWelcome: "wordmark.png"
+
+slideshow:    "show.qml"
+slideshowAPI: 2
+
+style:
+    SidebarBackground:        "#161618"
+    SidebarText:              "#c0c0c4"
+    SidebarTextCurrent:       "#1a1405"
+    SidebarBackgroundCurrent: "#d4b06a"

@@ -1,0 +1,11 @@
+#!/bin/sh
+# EliteLinux: фирменные обои по умолчанию и кэш иконок.
+set -e
+
+# xfdesktop в Debian берёт обои по умолчанию из альтернативы desktop-background,
+# поэтому так они применяются к любому монитору, без привязки к его имени.
+update-alternatives --install /usr/share/images/desktop-base/desktop-background \
+  desktop-background /usr/share/backgrounds/elite/elite-desktop.png 100
+update-alternatives --set desktop-background /usr/share/backgrounds/elite/elite-desktop.png
+
+gtk-update-icon-cache -f /usr/share/icons/Elite || true

@@ -1,0 +1,15 @@
+# Окружение Xfce и всё, на что опирается оформление EliteLinux
+xfce4
+xfce4-whiskermenu-plugin
+xfce4-xkb-plugin
+xfce4-pulseaudio-plugin
+xfce4-notifyd
+desktop-base
+papirus-icon-theme
+gtk2-engines-murrine
+fonts-inter
+fonts-jetbrains-mono
+plymouth
+plymouth-themes
+lightdm
+lightdm-gtk-greeter

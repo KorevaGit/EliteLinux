@@ -1,0 +1,45 @@
+#!/bin/bash
+# EliteLinux: настройка установленной системы. Запускается Calamares внутри неё
+# (shellprocess@elite): локаль, раскладка, часовой пояс, учётки, имя ПК, паспорт ПК.
+set -euo pipefail
+
+# --- язык, раскладка, часовой пояс ---
+sed -i 's/^# *ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/; s/^# *en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+update-locale LANG=ru_RU.UTF-8
+cat > /etc/default/keyboard <<'KBD'
+XKBMODEL="pc105"
+XKBLAYOUT="us,ru"
+XKBVARIANT=","
+XKBOPTIONS="grp:alt_shift_toggle"
+BACKSPACE="guess"
+KBD
+ln -sf /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+echo "Europe/Moscow" > /etc/timezone
+
+# --- учётки: менеджер и администратор (пароли — только хэши) ---
+while IFS=: read -r login name groups hash; do
+    case "$login" in ''|\#*) continue ;; esac
+    id "$login" >/dev/null 2>&1 || useradd -m -s /bin/bash -c "$name" "$login"
+    usermod -c "$name" -G "$groups" -p "$hash" "$login"
+done < /etc/elite/accounts
+rm -f /etc/elite/accounts
+
+# --- имя компьютера: elite- + последние 6 символов MAC первой физической сетевой карты ---
+mac=""
+for d in /sys/class/net/*; do
+    [ -e "$d/device" ] || continue
+    mac=$(tr -d ':' < "$d/address"); break
+done
+host="elite-${mac: -6}"
+[ -n "$mac" ] || host="elite-$(head -c3 /dev/urandom | od -An -tx1 | tr -d ' \n')"
+echo "$host" > /etc/hostname
+sed -i '/^127\.0\.1\.1/d' /etc/hosts
+echo "127.0.1.1	$host" >> /etc/hosts
+
+# --- паспорт ПК ---
+mkdir -p /etc/elite
+/usr/lib/elite/elite-hwinfo > /etc/elite/hardware.txt || true
+
+# --- убрать то, что нужно только установочной флешке ---
+rm -f /usr/share/applications/elite-installer.desktop /etc/xdg/autostart/elite-installer.desktop

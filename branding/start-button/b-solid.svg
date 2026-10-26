@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="20 14 360 246">
+  <defs><linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="30" y1="20" x2="370" y2="255"><stop offset="0" stop-color="#e6c27a"/><stop offset="0.5" stop-color="#c9a25a"/><stop offset="1" stop-color="#a87d38"/></linearGradient>
+    <!-- дверь вырезана насквозь -->
+    <mask id="door" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="280">
+      <rect width="400" height="280" fill="#fff"/>
+      <rect x="186" y="190" width="29" height="38" fill="#000"/>
+    </mask>
+  </defs>
+  <g mask="url(#door)" fill="url(#gold)">
+    <path d="M33 70 L141.8 133.9 L200 28 L258.2 133.9 L367 70 L300 210 L100 210 Z" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+    <rect x="88" y="226" width="224" height="26" rx="6"/>
+  </g>
+</svg>

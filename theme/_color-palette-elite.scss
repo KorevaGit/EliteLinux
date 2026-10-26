@@ -1,0 +1,74 @@
+// EliteLinux Theme Color Palette
+// Графитовый тёмно-серый фон и золотой акцент (#c9a25a) из фирменного стиля.
+// Подменяет _color-palette-default.scss при сборке Colloid (см. build.sh).
+
+// Red
+$red-light: #F44336;
+$red-dark: #E53935;
+
+// Pink
+$pink-light: #F06292;
+$pink-dark: #EC407A;
+
+// Purple
+$purple-light: #BA68C8;
+$purple-dark: #AB47BC;
+
+// Blue
+$blue-light: #6f9fd8;
+$blue-dark: #2f5f99;
+
+// Teal
+$teal-light: #4DB6AC;
+$teal-dark: #009688;
+
+// Green
+$green-light: #66BB6A;
+$green-dark: #4CAF50;
+
+// Yellow — фирменное золото
+$yellow-light: #d4b06a;
+$yellow-dark: #b08236;
+
+// Orange
+$orange-light: #FF8A65;
+$orange-dark: #FF7043;
+
+// Grey — нейтральная графитовая шкала; 650–950 дают фоны тёмной темы
+$grey-050: #f8f8f9;
+$grey-100: #f2f2f4;
+$grey-150: #ebebed;
+$grey-200: #dddde0;
+$grey-250: #cbcbcf;
+$grey-300: #c0c0c4;
+$grey-350: #a9a9ae;
+$grey-400: #9a9aa0;
+$grey-450: #85858b;
+$grey-500: #6b6b71;
+$grey-550: #4f4f54;
+$grey-600: #3d3d41;
+$grey-650: #313134;
+$grey-700: #232325;
+$grey-750: #1c1c1e;
+$grey-800: #161618;
+$grey-850: #121214;
+$grey-900: #0e0e10;
+$grey-950: #08080a;
+
+// White
+$white: #FFFFFF;
+
+// Black
+$black: #000000;
+
+// Button
+$button-close: #e0605a;
+$button-max: #d4b06a;
+$button-min: #9a9aa0;
+
+// Link
+$links: #8fb8e8;
+
+// Theme
+$default-light: $yellow-light;
+$default-dark: $yellow-dark;

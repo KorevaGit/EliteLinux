@@ -1,0 +1,102 @@
+# EliteLinux: заставка загрузки.
+# Фон — обои (заполняют экран без искажений), по центру плавно пульсирует
+# золотая корона, под ней надпись и тонкая полоска прогресса.
+
+W = Window.GetWidth();
+H = Window.GetHeight();
+Window.SetBackgroundTopColor(0.06, 0.14, 0.25);
+Window.SetBackgroundBottomColor(0.03, 0.07, 0.12);
+
+# --- фон: масштаб «cover», лишнее уходит за край экрана ---
+bg_image = Image("background.png");
+k = Math.Max(W / bg_image.GetWidth(), H / bg_image.GetHeight());
+bg_image = bg_image.Scale(bg_image.GetWidth() * k, bg_image.GetHeight() * k);
+bg = Sprite(bg_image);
+bg.SetPosition((W - bg_image.GetWidth()) / 2, (H - bg_image.GetHeight()) / 2, -100);
+
+# --- корона: высота 16% экрана ---
+crown_image = Image("crown.png");
+crown_h = H * 0.16;
+crown_image = crown_image.Scale(crown_image.GetWidth() * crown_h / crown_image.GetHeight(), crown_h);
+crown = Sprite(crown_image);
+crown_y = H * 0.40 - crown_h / 2;
+crown.SetPosition((W - crown_image.GetWidth()) / 2, crown_y, 10);
+
+# --- надпись под короной ---
+word_image = Image("wordmark.png");
+word_h = H * 0.045;
+word_image = word_image.Scale(word_image.GetWidth() * word_h / word_image.GetHeight(), word_h);
+word = Sprite(word_image);
+word_y = crown_y + crown_h + H * 0.045;
+word.SetPosition((W - word_image.GetWidth()) / 2, word_y, 10);
+
+# --- полоска прогресса ---
+bar_w = word_image.GetWidth() * 0.35;
+bar_h = Math.Max(2, Math.Int(H / 360));
+bar_x = (W - bar_w) / 2;
+bar_y = word_y + word_h + H * 0.06;
+track = Sprite(Image("bar-track.png").Scale(bar_w, bar_h));
+track.SetPosition(bar_x, bar_y, 10);
+bar_image = Image("bar.png");
+bar = Sprite();
+bar.SetPosition(bar_x, bar_y, 11);
+
+fun progress_callback(duration, progress) {
+  if (progress > 0.002)
+    bar.SetImage(bar_image.Scale(bar_w * progress, bar_h));
+}
+Plymouth.SetBootProgressFunction(progress_callback);
+
+# --- пульсация короны ---
+t = 0;
+fun refresh_callback() {
+  t++;
+  crown.SetOpacity(0.70 + 0.30 * Math.Sin(t / 25));
+}
+Plymouth.SetRefreshFunction(refresh_callback);
+
+# --- ввод пароля (на случай шифрования диска) и сообщения ---
+prompt = Sprite();
+bullets = Sprite();
+
+fun display_normal_callback() {
+  prompt.SetOpacity(0);
+  bullets.SetOpacity(0);
+  track.SetOpacity(1);
+  bar.SetOpacity(1);
+}
+
+fun display_password_callback(text, count) {
+  track.SetOpacity(0);
+  bar.SetOpacity(0);
+  prompt_image = Image.Text(text, 0.86, 0.88, 0.91, 1, "Inter 12");
+  prompt.SetImage(prompt_image);
+  prompt.SetPosition((W - prompt_image.GetWidth()) / 2, bar_y - H * 0.02, 20);
+  prompt.SetOpacity(1);
+  stars = "";
+  i = 0;
+  while (i < count) {
+    stars = stars + "●";
+    i++;
+  }
+  bullets_image = Image.Text(stars, 0.83, 0.69, 0.42, 1, "Inter 14");
+  bullets.SetImage(bullets_image);
+  bullets.SetPosition((W - bullets_image.GetWidth()) / 2, bar_y + H * 0.02, 20);
+  bullets.SetOpacity(1);
+}
+
+Plymouth.SetDisplayNormalFunction(display_normal_callback);
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+
+message = Sprite();
+fun message_callback(text) {
+  message_image = Image.Text(text, 0.72, 0.76, 0.81, 1, "Inter 10");
+  message.SetImage(message_image);
+  message.SetPosition((W - message_image.GetWidth()) / 2, H * 0.92, 20);
+}
+Plymouth.SetMessageFunction(message_callback);
+
+fun quit_callback() {
+  crown.SetOpacity(1);
+}
+Plymouth.SetQuitFunction(quit_callback);

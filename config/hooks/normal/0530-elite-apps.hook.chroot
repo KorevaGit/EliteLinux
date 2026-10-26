@@ -1,0 +1,21 @@
+#!/bin/sh
+# EliteLinux: настройки программ после установки пакетов.
+set -e
+
+# Flameshot вместо xfce4-screenshooter на клавишах Print Screen
+SHORTCUTS=/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+sed -i \
+  -e 's|value="xfce4-screenshooter"|value="flameshot gui"|' \
+  -e 's|value="xfce4-screenshooter -w"|value="flameshot gui"|' \
+  -e 's|value="xfce4-screenshooter -r"|value="flameshot gui"|' \
+  "$SHORTCUTS"
+grep -q 'flameshot gui' "$SHORTCUTS"
+
+# хэши паролей учёток для установщика — только root
+[ -e /etc/elite/accounts ] && chmod 600 /etc/elite/accounts
+
+# AnyDesk: без автозапуска — ни службы при старте системы, ни запуска при входе
+if [ -e /usr/bin/anydesk ]; then
+  systemctl disable anydesk.service || true
+  rm -f /etc/xdg/autostart/anydesk*.desktop
+fi

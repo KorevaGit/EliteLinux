@@ -1,0 +1,11 @@
+# Установщик Calamares и то, на что опираются наши скрипты установки
+calamares
+calamares-settings-debian
+qml6-module-qtquick
+qml6-module-qtquick-window
+qml6-module-qtqml-workerscript
+x11-xserver-utils
+pciutils
+yad
+eject
+rsync

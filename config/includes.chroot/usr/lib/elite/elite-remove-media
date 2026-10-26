@@ -1,0 +1,32 @@
+#!/bin/bash
+# EliteLinux: вместо немедленной перезагрузки после установки — экран «Извлеките флешку».
+# Перезагружает сам, как только флешка отключена. После извлечения файлов live-системы
+# уже нет, поэтому перезагрузка — через sysrq ядра (целевой диск Calamares уже отмонтировал).
+set -u
+
+reboot_now() {
+    sync
+    echo 1 > /proc/sys/kernel/sysrq
+    echo b > /proc/sysrq-trigger
+}
+
+src=$(findmnt -no SOURCE /run/live/medium 2>/dev/null)
+disk=$(lsblk -no PKNAME "$src" 2>/dev/null | head -1)
+[ -n "$disk" ] || disk=$(basename "${src:-none}")
+
+# CD/DVD (и виртуалка) — просто выбрасываем диск
+case "$disk" in sr*) eject "/dev/$disk" 2>/dev/null; reboot_now ;; esac
+
+GTK_THEME=Elite-Dark yad --fullscreen --undecorated --no-escape --center \
+    --image=/usr/share/pixmaps/elite-start.svg --image-on-top \
+    --text-align=center \
+    --text="<span size='xx-large' weight='bold'>Извлеките установочную флешку</span>
+
+<span size='large'>EliteLinux установлена. Компьютер перезагрузится сам,
+как только флешка будет отключена.</span>" \
+    --button="Перезагрузить сейчас:0" &
+ui=$!
+
+while [ -e "/sys/block/$disk" ] && kill -0 "$ui" 2>/dev/null; do sleep 1; done
+kill "$ui" 2>/dev/null
+reboot_now
