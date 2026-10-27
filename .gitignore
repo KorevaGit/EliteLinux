@@ -32,3 +32,6 @@
 # секреты сборки (хэши паролей учёток) — вне репозитория, подкладываются при сборке
 /secrets/
 /config/includes.chroot/etc/elite/accounts
+/vm/
+/config/includes.chroot/etc/calamares/branding/elite/logo.png
+/config/includes.chroot/etc/calamares/branding/elite/wordmark.png

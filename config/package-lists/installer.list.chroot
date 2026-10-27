@@ -6,6 +6,7 @@ qml6-module-qtquick-window
 qml6-module-qtqml-workerscript
 x11-xserver-utils
 pciutils
+pci.ids
 yad
 eject
 rsync

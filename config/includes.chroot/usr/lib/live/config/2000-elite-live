@@ -1,0 +1,5 @@
+#!/bin/sh
+# EliteLinux: только для live-флешки (live-config запускает это при загрузке live-системы).
+# Мастер первого запуска EliteSIP не должен открываться поверх установщика —
+# в установленной системе автозапуск EliteSIP остаётся.
+rm -f /etc/xdg/autostart/elitesip.desktop

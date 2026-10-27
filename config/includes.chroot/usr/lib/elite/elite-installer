@@ -12,7 +12,8 @@ sudo mv /etc/fstab /etc/fstab.orig.calamares 2>/dev/null
 
 xhost +si:localuser:root >/dev/null
 # QML_XHR_ALLOW_FILE_READ — чтобы слайды могли прочитать /run/elite/hardware.json
-sudo DISPLAY="$DISPLAY" QML_XHR_ALLOW_FILE_READ=1 QT_AUTO_SCREEN_SCALE_FACTOR=1 calamares
+# LANG — иначе от root интерфейс частично на английском
+sudo DISPLAY="$DISPLAY" LANG=ru_RU.UTF-8 LANGUAGE=ru QML_XHR_ALLOW_FILE_READ=1 QT_AUTO_SCREEN_SCALE_FACTOR=1 calamares
 xhost -si:localuser:root >/dev/null
 
 sudo mv /etc/fstab.orig.calamares /etc/fstab 2>/dev/null

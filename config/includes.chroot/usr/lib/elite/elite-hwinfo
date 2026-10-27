@@ -22,7 +22,7 @@ disks=(); while read -r name size rota model; do
     [ "$name" = "$live_disk" ] && continue
     kind=$([ "$rota" = 0 ] && echo SSD || echo HDD)
     disks+=("$name|$size|$kind|${model:-—}")
-done < <(lsblk -dnb -o NAME,SIZE,ROTA,MODEL -e 1,7,11 2>/dev/null | awk '{s=$2/1e9; m=""; for(i=4;i<=NF;i++) m=m (m?" ":"") $i; printf "%s %.0fГБ %s %s\n", $1, s, $3, m}')
+done < <(lsblk -dnb -o NAME,SIZE,ROTA,MODEL -e 1,2,7,11 2>/dev/null | awk '{s=$2/1e9; m=""; for(i=4;i<=NF;i++) m=m (m?" ":"") $i; printf "%s %.0fГБ %s %s\n", $1, s, $3, m}')
 
 nics=(); for d in /sys/class/net/*; do
     [ -e "$d/device" ] || continue
