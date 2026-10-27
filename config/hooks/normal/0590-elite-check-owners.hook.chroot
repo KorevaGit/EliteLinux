@@ -5,7 +5,13 @@
 set -e
 [ "$(stat -c %u /)" = 0 ] && [ "$(stat -c %u /usr/bin)" = 0 ]
 [ -u /usr/bin/su ] && [ -u /usr/bin/passwd ] && [ -u /usr/bin/sudo ]
-# /packages и кэш apt — временные (live-build подключает их на время сборки)
-n=$(find / -xdev -uid 1000 -not -path '/home/*' -not -path '/tmp/*' -not -path '/proc/*' \
-    -not -path '/packages*' -not -path '/var/cache/apt/archives/*' 2>/dev/null | wc -l)
-[ "$n" = 0 ] || { echo "Файлов во владении UID 1000 вне /home: $n" >&2; exit 1; }
+# /packages, кэш apt и /live-build (каталог config проекта) — временные:
+# live-build подключает их только на время сборки
+bad=$(find / -xdev -uid 1000 -not -path '/home/*' -not -path '/tmp/*' -not -path '/proc/*' \
+    -not -path '/packages*' -not -path '/var/cache/apt/archives/*' -not -path '/live-build/*' \
+    -not -path '/live-build' 2>/dev/null)
+[ -z "$bad" ] || {
+    echo "Файлов во владении UID 1000 вне /home: $(echo "$bad" | wc -l)" >&2
+    echo "$bad" | cut -d/ -f1-4 | sort | uniq -c | sort -rn | head -15 >&2
+    exit 1
+}
