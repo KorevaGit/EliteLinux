@@ -1,0 +1,9 @@
+[Unit]
+Description=EliteLinux: GoPro как веб-камера (%i)
+BindsTo=sys-subsystem-net-devices-%i.device
+After=sys-subsystem-net-devices-%i.device NetworkManager.service
+
+[Service]
+ExecStart=/usr/lib/elite/elite-gopro-webcam %i
+Restart=on-failure
+RestartSec=3

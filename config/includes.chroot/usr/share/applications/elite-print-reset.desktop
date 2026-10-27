@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Сбросить очередь печати
+Comment=Отменить все задания печати и перезапустить службу печати — без перезагрузки ПК
+Exec=sh -c 'pkexec /usr/lib/elite/elite-print-reset && notify-send -i printer "Очередь печати сброшена" "Можно печатать снова"'
+Icon=printer-error
+Terminal=false
+Categories=System;Settings;

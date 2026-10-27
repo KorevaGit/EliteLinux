@@ -1,0 +1,15 @@
+#!/bin/sh
+# EliteLinux: аварийный сброс очереди печати без перезагрузки ПК (запуск через pkexec).
+# Отменяет все задания, чистит спул, перезапускает CUPS и снимает принтеры с паузы
+# (после ошибки CUPS ставит принтер на паузу — частая причина «ничего не печатает»).
+set -u
+cancel -a -x 2>/dev/null || true
+systemctl stop cups.service cups.socket 2>/dev/null || true
+find /var/spool/cups -maxdepth 1 -type f \( -name 'c*' -o -name 'd*' \) -delete 2>/dev/null || true
+systemctl start cups.socket cups.service
+sleep 2
+for p in $(lpstat -p 2>/dev/null | awk '/^printer/ {print $2}'); do
+    cupsenable "$p" 2>/dev/null || true
+    cupsaccept "$p" 2>/dev/null || true
+done
+echo "Очередь печати сброшена"

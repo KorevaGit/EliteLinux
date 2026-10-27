@@ -1,0 +1,10 @@
+# Печать и сканирование: драйверы основных марок, принтеры и сканеры без драйверов
+# (IPP-over-USB, eSCL/WSD), поиск сетевых устройств, «Печать в PDF»
+printer-driver-all
+cups-filters
+ipp-usb
+sane-airscan
+libsane-hpaio
+avahi-daemon
+libnss-mdns
+printer-driver-cups-pdf

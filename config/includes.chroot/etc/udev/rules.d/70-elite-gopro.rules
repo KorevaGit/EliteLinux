@@ -1,0 +1,2 @@
+# EliteLinux: GoPro (USB 2672:*) подключена — включить её как веб-камеру
+ACTION=="add", SUBSYSTEM=="net", ATTRS{idVendor}=="2672", TAG+="systemd", ENV{SYSTEMD_WANTS}+="elite-gopro-webcam@%k.service"

@@ -1,0 +1,29 @@
+#!/bin/sh
+# EliteLinux: GoPro HERO12 (Open GoPro) по USB как веб-камера.
+# Запускается udev → systemd при подключении GoPro (USB 2672:*), $1 — сетевой интерфейс
+# камеры. Камера раздаёт адрес по DHCP (NetworkManager его получает) и сама живёт на .51;
+# включаем управление по USB и режим веб-камеры, поток UDP:8554 (MPEG-TS) ffmpeg
+# передаёт в виртуальную камеру v4l2loopback.
+set -eu
+IFACE="$1"
+. /etc/elite/gopro.conf
+
+# ждём адрес от камеры (до 30 с)
+i=0; HOST_IP=""
+while [ -z "$HOST_IP" ] && [ "$i" -lt 30 ]; do
+    HOST_IP=$(ip -4 -o addr show dev "$IFACE" 2>/dev/null | awk '{print $4}' | cut -d/ -f1 | head -1)
+    [ -n "$HOST_IP" ] || { sleep 1; i=$((i + 1)); }
+done
+[ -n "$HOST_IP" ] || { echo "GoPro: нет адреса на $IFACE"; exit 1; }
+CAM="http://${HOST_IP%.*}.51"
+echo "GoPro: $IFACE, камера $CAM"
+
+api() { curl -sf --max-time 5 "$CAM$1" >/dev/null; }
+# управление по USB (на части прошивок включено по умолчанию — ошибку не считаем фатальной)
+api "/gopro/camera/control/wired_usb?p=1" || true
+api "/gopro/webcam/stop" || true
+api "/gopro/webcam/start?res=${GOPRO_RES}&fov=${GOPRO_FOV}&port=${GOPRO_PORT}&protocol=TS"
+
+exec ffmpeg -hide_banner -loglevel warning -nostdin -threads 1 -fflags nobuffer \
+    -i "udp://@0.0.0.0:${GOPRO_PORT}?overrun_nonfatal=1&fifo_size=50000000" \
+    -vf format=yuv420p -f v4l2 "$GOPRO_VIDEO"

@@ -1,0 +1,11 @@
+# Камеры. Обычные USB-веб-камеры и HDMI-карты захвата (UVC) — драйвер ядра uvcvideo.
+# GoPro HERO12 по USB: камера отдаёт видео по USB-сети, ffmpeg передаёт его в виртуальную
+# камеру v4l2loopback («GoPro») — её видят Zoom, браузеры, MAX (elite-gopro-webcam).
+v4l2loopback-dkms
+dkms
+gcc
+make
+linux-headers-amd64
+ffmpeg
+curl
+v4l-utils
