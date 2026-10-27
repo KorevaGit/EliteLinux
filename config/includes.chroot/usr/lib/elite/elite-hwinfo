@@ -20,6 +20,7 @@ gpu=$(lspci 2>/dev/null | grep -E 'VGA|3D|Display' | head -1 | cut -d: -f3- | se
 live_disk=$(lsblk -no PKNAME "$(findmnt -no SOURCE /run/live/medium 2>/dev/null)" 2>/dev/null | head -1)
 disks=(); while read -r name size rota model; do
     [ "$name" = "$live_disk" ] && continue
+    case "$name" in zram*|loop*|ram*) continue ;; esac   # своп в памяти — не диск
     kind=$([ "$rota" = 0 ] && echo SSD || echo HDD)
     disks+=("$name|$size|$kind|${model:-—}")
 done < <(lsblk -dnb -o NAME,SIZE,ROTA,MODEL -e 1,2,7,11 2>/dev/null | awk '{s=$2/1e9; m=""; for(i=4;i<=NF;i++) m=m (m?" ":"") $i; printf "%s %.0fГБ %s %s\n", $1, s, $3, m}')

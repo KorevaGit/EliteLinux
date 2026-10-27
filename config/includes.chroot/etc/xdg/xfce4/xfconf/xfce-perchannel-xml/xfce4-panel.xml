@@ -43,6 +43,9 @@
       <property name="position-profile-alternate" type="bool" value="true"/>
       <property name="launcher-show-description" type="bool" value="false"/>
       <property name="hover-switch-category" type="bool" value="true"/>
+      <!-- значки программ ~40 px (3), категорий 24 px (1): строки меню свободнее -->
+      <property name="launcher-icon-size" type="int" value="3"/>
+      <property name="category-icon-size" type="int" value="1"/>
       <property name="menu-width" type="int" value="700"/>
       <property name="menu-height" type="int" value="620"/>
       <property name="show-command-menueditor" type="bool" value="false"/>
