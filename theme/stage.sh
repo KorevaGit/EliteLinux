@@ -24,8 +24,6 @@ cp "${BRANDING}/crown.svg"           "${CHROOT}/usr/share/pixmaps/elite-crown.sv
 # иначе широкая корона смещается относительно ярлыков
 cp "${BRANDING}/start-button/b-solid-square.svg" "${CHROOT}/usr/share/pixmaps/elite-start.svg"
 cp "${BRANDING}/avatar.png"                "${CHROOT}/usr/share/pixmaps/elite-avatar.png"
-# оригинальные логотипы программ, которых нет в Papirus (веб-ярлык Телемоста)
-cp "${BRANDING}"/app-icons/elite-*.png "${CHROOT}/usr/share/pixmaps/"
 cp "${BRANDING}/wallpaper-clean.png" "${CHROOT}/usr/share/backgrounds/elite/elite-desktop.png"
 cp "${BRANDING}/wallpaper-logo.png"  "${CHROOT}/usr/share/backgrounds/elite/elite-login.png"
 

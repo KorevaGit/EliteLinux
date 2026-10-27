@@ -47,9 +47,7 @@ I = {
     "thunar": app("org.xfce.thunar"), "yandex": app("yandex-browser"), "chrome": app("google-chrome"),
     "telegram": app("telegram"), "zoom": app("Zoom"),
     "writer": app("libreoffice-writer"), "calc": app("libreoffice-calc"),
-    # программ нет в Papirus — оригинальные логотипы, как в сборке
     "max": app("internet-chat"),  # в образе — оригинальная иконка из пакета max
-    "telemost": uri(ROOT / "branding/app-icons/elite-telemost.png"),
     "terminal": app("org.xfce.terminal"),
     "elitesip": uri(ELITESIP_PNG) if ELITESIP_PNG else app("internet-telephony"),
     # значки трея: на светлой панели — тёмные из Papirus-Light
@@ -60,7 +58,7 @@ F = {n: uri(ELITE / f"{n}.svg") for n in
       "folder-desktop", "folder-templates", "folder-public", "folder", "user-home"]}
 
 favorites = [("yandex", "Яндекс Браузер"), ("chrome", "Google Chrome"), ("telegram", "Telegram"),
-             ("max", "MAX"), ("elitesip", "EliteSIP"), ("zoom", "Zoom"), ("telemost", "Яндекс Телемост"),
+             ("max", "MAX"), ("elitesip", "EliteSIP"), ("zoom", "Zoom"),
              ("writer", "LibreOffice Writer"), ("calc", "LibreOffice Calc"), ("thunar", "Файловый менеджер")]
 categories = ["Избранное", "Недавние", "Все программы", "Интернет", "Офис", "Графика",
               "Мультимедиа", "Стандартные", "Система", "Настройки"]
