@@ -24,6 +24,9 @@ cp "${BRANDING}/crown.svg"           "${CHROOT}/usr/share/pixmaps/elite-crown.sv
 # иначе широкая корона смещается относительно ярлыков
 cp "${BRANDING}/start-button/b-solid-square.svg" "${CHROOT}/usr/share/pixmaps/elite-start.svg"
 cp "${BRANDING}/avatar.png"                "${CHROOT}/usr/share/pixmaps/elite-avatar.png"
+# аватары учёток (исходники — avatar-*.svg, PNG 256 px: rsvg-convert -w 256 -h 256)
+cp "${BRANDING}/avatar-manager.png"        "${CHROOT}/usr/share/pixmaps/elite-avatar-manager.png"
+cp "${BRANDING}/avatar-admin.png"          "${CHROOT}/usr/share/pixmaps/elite-avatar-eliteadmin.png"
 cp "${BRANDING}/wallpaper-clean.png" "${CHROOT}/usr/share/backgrounds/elite/elite-desktop.png"
 cp "${BRANDING}/wallpaper-logo.png"  "${CHROOT}/usr/share/backgrounds/elite/elite-login.png"
 

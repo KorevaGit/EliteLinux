@@ -15,11 +15,25 @@
   border-radius: 12px;
   margin: 4px 0;
 }
+/* строки списка программ: значки 24 px (launcher-icon-size 2) и воздух между строками */
+#whiskermenu-window treeview.view {
+  -GtkTreeView-vertical-separator: 14px;
+}
+/* кнопки «Заблокировать экран», «Выключить», «Выйти» — с подписями (патч Whisker),
+ * на подложке, чтобы читались как кнопки */
 #whiskermenu-window .commands-area button,
 #whiskermenu-window button.command-button {
-  min-width: 36px;
-  min-height: 36px;
+  padding: 8px 14px;
+  min-height: 26px;
+  margin-left: 6px;
   border-radius: 10px;
+  background-color: alpha(@theme_fg_color, 0.06);
+}
+#whiskermenu-window button.command-button:hover {
+  background-color: alpha(@theme_fg_color, 0.14);
+}
+#whiskermenu-window .command-label {
+  font-weight: 500;
 }
 #whiskermenu-window .profile-username,
 #whiskermenu-window label.profile-username {
@@ -38,4 +52,18 @@
 }
 .xfce4-panel .tasklist button {
   padding: 4px 12px;
+}
+
+/* трей: равные промежутки между сетью, раскладкой, звуком и часами (~27 px)
+ * и отступ справа у часов. У самих плагинов (XfcePanelPlugin) отступы не работают —
+ * задаём их кнопкам внутри; ячейку значков трея держит square-icons. */
+.xfce4-panel #xkb-13 button,
+.xfce4-panel #xkb-13 > * {
+  padding: 0 6px 0 2px;
+}
+.xfce4-panel #pulseaudio-button {
+  padding: 0 9px;
+}
+.xfce4-panel #clock-button {
+  padding: 0 14px;
 }

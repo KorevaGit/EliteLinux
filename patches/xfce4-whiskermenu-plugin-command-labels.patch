@@ -1,0 +1,19 @@
+--- a/panel-plugin/command.cpp
++++ b/panel-plugin/command.cpp
+@@ -106,8 +106,15 @@
+ 		},
+ 		Connect::After);
+ 
++	// EliteLinux: подпись рядом со значком — кнопки понятнее без всплывающей подсказки
++	GtkWidget* box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8);
+ 	GtkWidget* image = gtk_image_new_from_icon_name(m_icon, GTK_ICON_SIZE_LARGE_TOOLBAR);
+-	gtk_container_add(GTK_CONTAINER(m_button), GTK_WIDGET(image));
++	gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(image), false, false, 0);
++	GtkWidget* label = gtk_label_new(m_text);
++	gtk_style_context_add_class(gtk_widget_get_style_context(label), "command-label");
++	gtk_box_pack_start(GTK_BOX(box), label, false, false, 0);
++	gtk_widget_show_all(box);
++	gtk_container_add(GTK_CONTAINER(m_button), box);
+ 
+ 	gtk_style_context_add_class(gtk_widget_get_style_context(m_button), "command-button");
+ 

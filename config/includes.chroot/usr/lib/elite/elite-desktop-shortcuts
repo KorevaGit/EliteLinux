@@ -1,0 +1,35 @@
+#!/bin/sh
+# EliteLinux: при первом входе кладёт на рабочий стол ярлыки программ из «Избранного»
+# меню «Пуск» (список берётся из настроек Whisker — один источник правды).
+# Xfce 4.20 запускает ярлык с рабочего стола без вопроса «Доверять?» только если он
+# исполняемый и в метаданных GIO записана его контрольная сумма — это можно сделать
+# лишь в сеансе пользователя, поэтому скрипт стоит в автозапуске, а не в установщике.
+# Удалённые пользователем ярлыки заново не появляются (метка).
+set -u
+MARK="${XDG_CONFIG_HOME:-$HOME/.config}/elite/desktop-shortcuts-done"
+[ -e "$MARK" ] && exit 0
+
+# при первом входе xdg-user-dirs может ещё не создать «Рабочий стол» — создаём сами
+xdg-user-dirs-update 2>/dev/null || true
+DESK="$(xdg-user-dir DESKTOP 2>/dev/null)"
+[ -n "$DESK" ] && [ "$DESK" != "$HOME" ] || exit 0
+mkdir -p "$DESK"
+
+favorites=$(xfconf-query -c xfce4-panel -p /plugins/plugin-1/favorites 2>/dev/null \
+    | grep '\.desktop$')
+
+for name in $favorites; do
+    for dir in "$HOME/.local/share/applications" /usr/local/share/applications /usr/share/applications; do
+        src="$dir/$name"
+        [ -e "$src" ] || continue
+        dst="$DESK/$name"
+        [ -e "$dst" ] || cp "$src" "$dst"
+        chmod 755 "$dst"
+        gio set -t string "$dst" metadata::xfce-exe-checksum \
+            "$(sha256sum "$dst" | cut -d' ' -f1)" 2>/dev/null || true
+        break
+    done
+done
+
+mkdir -p "$(dirname "$MARK")"
+touch "$MARK"

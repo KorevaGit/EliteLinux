@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- EliteLinux: аватар «Администратор» — IT: монитор с кодом и шестерёнка, графит и золото -->
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#3a3a3e"/>
+      <stop offset="1" stop-color="#18181a"/>
+    </radialGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2c2c30"/>
+      <stop offset="1" stop-color="#1a1a1c"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="256" fill="url(#bg)"/>
+
+  <!-- монитор -->
+  <rect x="104" y="128" width="304" height="208" rx="24" fill="#121214" stroke="#d4b06a" stroke-width="12"/>
+  <rect x="126" y="150" width="260" height="164" rx="10" fill="url(#screen)"/>
+  <!-- подставка -->
+  <path d="M226 342 L286 342 L296 384 L216 384 Z" fill="#d4b06a"/>
+  <rect x="176" y="380" width="160" height="16" rx="8" fill="#d4b06a"/>
+
+  <!-- </> на экране -->
+  <g fill="none" stroke="#d4b06a" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M206 196 L170 232 L206 268"/>
+    <path d="M306 196 L342 232 L306 268"/>
+    <path d="M276 186 L236 278" stroke="#f0d79a"/>
+  </g>
+
+  <!-- шестерёнка в углу -->
+  <g transform="translate(372 352)">
+    <circle r="50" fill="#18181a"/>
+    <g fill="#d4b06a">
+      <circle r="30"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4" transform="rotate(45)"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4" transform="rotate(90)"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4" transform="rotate(135)"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4" transform="rotate(180)"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4" transform="rotate(225)"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4" transform="rotate(270)"/>
+      <rect x="-9" y="-44" width="18" height="20" rx="4" transform="rotate(315)"/>
+    </g>
+    <circle r="12" fill="#18181a"/>
+  </g>
+
+  <!-- золотое кольцо -->
+  <circle cx="256" cy="256" r="246" fill="none" stroke="#d4b06a" stroke-width="12"/>
+</svg>

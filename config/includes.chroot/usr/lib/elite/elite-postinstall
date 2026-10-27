@@ -25,13 +25,14 @@ while IFS=: read -r login name groups hash; do
 done < /etc/elite/accounts
 rm -f /etc/elite/accounts
 
-# аватар с короной (AccountsService — для меню Whisker и экрана входа)
+# аватары: менеджер в аниме-стиле, администратор — монитор с кодом
+# (AccountsService — для меню Whisker и экрана входа)
 mkdir -p /var/lib/AccountsService/icons /var/lib/AccountsService/users
 for u in manager eliteadmin; do
-    cp /usr/share/pixmaps/elite-avatar.png "/var/lib/AccountsService/icons/$u"
+    cp "/usr/share/pixmaps/elite-avatar-$u.png" "/var/lib/AccountsService/icons/$u"
     printf '[User]\nIcon=/var/lib/AccountsService/icons/%s\nSystemAccount=false\n' "$u" \
         > "/var/lib/AccountsService/users/$u"
-    cp /usr/share/pixmaps/elite-avatar.png "/home/$u/.face"
+    cp "/usr/share/pixmaps/elite-avatar-$u.png" "/home/$u/.face"
     chown "$u:$u" "/home/$u/.face"
 done
 

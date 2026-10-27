@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=EliteLinux: ярлыки на рабочем столе
+Comment=Один раз при первом входе кладёт на рабочий стол программы из «Избранного»
+Exec=/usr/lib/elite/elite-desktop-shortcuts
+NoDisplay=true
+OnlyShowIn=XFCE;
+X-XFCE-Autostart-Override=true

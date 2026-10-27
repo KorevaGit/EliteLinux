@@ -39,12 +39,14 @@
       <property name="view-mode" type="int" value="1"/>
       <property name="default-category" type="int" value="0"/>
       <property name="position-search-alternate" type="bool" value="true"/>
-      <property name="position-commands-alternate" type="bool" value="true"/>
+      <!-- кнопки «Заблокировать/Выключить/Выйти» — в строке с именем, а не с поиском:
+           с подписями они широкие и иначе сжимают список программ -->
+      <property name="position-commands-alternate" type="bool" value="false"/>
       <property name="position-profile-alternate" type="bool" value="true"/>
       <property name="launcher-show-description" type="bool" value="false"/>
       <property name="hover-switch-category" type="bool" value="true"/>
-      <!-- значки программ ~40 px (3), категорий 24 px (1): строки меню свободнее -->
-      <property name="launcher-icon-size" type="int" value="3"/>
+      <!-- значки программ 24 px (2), категорий (1); воздух между строками — в elite-extra.css -->
+      <property name="launcher-icon-size" type="int" value="2"/>
       <property name="category-icon-size" type="int" value="1"/>
       <property name="menu-width" type="int" value="700"/>
       <property name="menu-height" type="int" value="620"/>
@@ -52,6 +54,9 @@
            иначе поле под тень вокруг скруглённого меню рисуется чёрной рамкой -->
       <property name="menu-opacity" type="int" value="99"/>
       <property name="show-command-menueditor" type="bool" value="false"/>
+      <!-- «Диспетчер настроек» есть в категории «Настройки»; внизу — блокировка, выключение, выход -->
+      <property name="show-command-settings" type="bool" value="false"/>
+      <property name="show-command-shutdown" type="bool" value="true"/>
       <property name="show-command-switchuser" type="bool" value="false"/>
       <property name="show-command-hibernate" type="bool" value="false"/>
       <property name="favorites" type="array">

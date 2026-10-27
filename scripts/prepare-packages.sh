@@ -25,9 +25,12 @@ dpkg-deb -R "$ELITESIP_DEB" "$tmp/pkg"
 sed -i 's/\blibicu74\b/libicu76 | libicu74/' "$tmp/pkg/DEBIAN/control"
 dpkg-deb --root-owner-group -b "$tmp/pkg" "$PKG/elitesip_amd64.deb" >/dev/null
 
-# экран входа с патчами EliteLinux (patches/) — собирается один раз, долго
-if ! ls "$PKG"/lightdm-gtk-greeter_*+elite*_amd64.deb >/dev/null 2>&1; then
-  "${ROOT}/scripts/build-greeter.sh"
-fi
+# пакеты с патчами EliteLinux (patches/) — собираются один раз, долго.
+# После правки патча удалить старый .deb из config/packages.chroot.
+build_patched() {
+  ls "$PKG/$1"_*+elite*_amd64.deb >/dev/null 2>&1 || "${ROOT}/scripts/build-patched.sh" "$1" "$2"
+}
+build_patched lightdm-gtk-greeter "без «Other...» при выключенном ручном вводе логина"
+build_patched xfce4-whiskermenu-plugin "подписи на кнопках «Заблокировать», «Выйти», «Выключить»"
 
 ls -la "$PKG"
