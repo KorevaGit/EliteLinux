@@ -7,7 +7,7 @@ set -e
 [ -u /usr/bin/su ] && [ -u /usr/bin/passwd ] && [ -u /usr/bin/sudo ]
 # /packages, кэш apt и /live-build (каталог config проекта) — временные:
 # live-build подключает их только на время сборки
-bad=$(find / -xdev -uid 1000 -not -path '/home/*' -not -path '/tmp/*' -not -path '/proc/*' \
+bad=$(find / -xdev -uid 1000 -not -path '/home/*' -not -path '/tmp/*' -not -path '/proc/*' -not -path '/sys*' -not -path '/dev/*' -not -path '/run/*' \
     -not -path '/packages*' -not -path '/var/cache/apt/archives/*' -not -path '/live-build/*' \
     -not -path '/live-build' 2>/dev/null)
 [ -z "$bad" ] || {
