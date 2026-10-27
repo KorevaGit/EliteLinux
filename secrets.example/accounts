@@ -1,5 +1,5 @@
 # EliteLinux: учётки, создаваемые установщиком. Скопировать в secrets/accounts (chmod 600)
 # и подставить хэши: openssl passwd -6
 # логин:отображаемое имя:группы:хэш пароля
-manager:Менеджер:audio,video,plugdev,netdev,lpadmin,scanner,cdrom:$6$ЗАМЕНИТЬ
-eliteadmin:Администратор:sudo,audio,video,plugdev,netdev,lpadmin,scanner,cdrom,adm:$6$ЗАМЕНИТЬ
+manager:Менеджер:audio,video,plugdev,netdev,lpadmin,scanner,cdrom,bluetooth:$6$ЗАМЕНИТЬ
+eliteadmin:Администратор:sudo,audio,video,plugdev,netdev,lpadmin,scanner,cdrom,bluetooth,adm:$6$ЗАМЕНИТЬ

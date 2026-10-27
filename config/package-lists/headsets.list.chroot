@@ -1,0 +1,9 @@
+# Гарнитуры. USB (в т.ч. JBL Quantum 350 Wireless 2.4 ГГц, 0ecb:2047) работают через
+# драйверы ядра snd-usb-audio + usbhid и PipeWire — отдельных пакетов не нужно.
+# Bluetooth-гарнитуры: служба BlueZ, звук через PipeWire (A2DP и HFP с микрофоном —
+# WirePlumber переключает профиль сам, когда программа берёт микрофон), сопряжение — Blueman.
+bluez
+blueman
+libspa-0.2-bluetooth
+# прошивки Bluetooth-адаптеров (Intel — в firmware-iwlwifi, Realtek, Atheros — уже в образе)
+firmware-brcm80211
