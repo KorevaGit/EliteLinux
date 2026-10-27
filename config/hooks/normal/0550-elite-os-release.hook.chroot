@@ -5,6 +5,8 @@
 # dpkg-divert — чтобы обновление base-files не вернуло стандартное имя.
 set -e
 f=/usr/lib/os-release
-dpkg-divert --quiet --local --rename --add --divert "$f.debian" "$f"
-sed -e 's/^PRETTY_NAME=.*/PRETTY_NAME="EliteLinux 1.0 (Debian 13)"/' "$f.debian" > "$f"
+# --no-rename + копия: файл из Essential-пакета не должен пропадать ни на миг
+dpkg-divert --quiet --local --no-rename --add --divert "$f.debian" "$f"
+cp -p "$f" "$f.debian"
+sed -i -e 's/^PRETTY_NAME=.*/PRETTY_NAME="EliteLinux 1.0 (Debian 13)"/' "$f"
 grep -q '^PRETTY_NAME="EliteLinux' "$f"
