@@ -20,8 +20,9 @@ cp -r "${HERE}"/dist/Elite-* "${CHROOT}/usr/share/themes/"
 cp -r "${HERE}/dist/icons/Elite" "${CHROOT}/usr/share/icons/"
 
 cp "${BRANDING}/crown.svg"           "${CHROOT}/usr/share/pixmaps/elite-crown.svg"
-# кнопка меню — сплошной силуэт короны: тонкий контур плохо читается на панели
-cp "${BRANDING}/start-button/b-solid.svg" "${CHROOT}/usr/share/pixmaps/elite-start.svg"
+# кнопка меню — сплошной силуэт короны в квадратной рамке (как значки программ),
+# иначе широкая корона смещается относительно ярлыков
+cp "${BRANDING}/start-button/b-solid-square.svg" "${CHROOT}/usr/share/pixmaps/elite-start.svg"
 cp "${BRANDING}/avatar.png"                "${CHROOT}/usr/share/pixmaps/elite-avatar.png"
 # оригинальные логотипы программ, которых нет в Papirus (веб-ярлык Телемоста)
 cp "${BRANDING}"/app-icons/elite-*.png "${CHROOT}/usr/share/pixmaps/"

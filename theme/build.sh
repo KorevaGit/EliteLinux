@@ -33,8 +33,24 @@ fi
 cp -r "$SRC" "$WORK/colloid"
 cp "${HERE}/_color-palette-elite.scss" "$WORK/colloid/src/sass/_color-palette-default.scss"
 
+# EliteLinux мягче Colloid: углы элементов 6 → 10 px, окон и меню 12 → 16 px
+sed -i -e 's/^\$modal-radius: 6px;/$modal-radius: 12px;/' \
+       -e 's/^\$corner-radius: 6px;/$corner-radius: 10px;/' \
+       "$WORK/colloid/src/sass/_variables.scss"
+grep -q '^\$corner-radius: 10px;' "$WORK/colloid/src/sass/_variables.scss"
+
 rm -rf "$DIST" && mkdir -p "$DIST"
 # Кнопки окна в обычном (Windows-) стиле: свернуть/развернуть/закрыть справа
 "$WORK/colloid/install.sh" -d "$DIST" -n Elite -t default -c dark light --tweaks normal
+
+# дополнения EliteLinux (меню Whisker, панель) — в конец CSS обеих тем
+for t in Elite-Dark Elite-Light; do
+  cat "${HERE}/elite-extra.css" >> "$DIST/$t/gtk-3.0/gtk.css"
+done
+
+# верхние углы рамки окон Xfwm4 — тем же радиусом, что и у окон GTK
+for t in Elite-Dark Elite-Light; do
+  python3 "${HERE}/round-xfwm4-corners.py" "$DIST/$t/xfwm4" 14
+done
 
 echo "Готово: $(ls "$DIST" | tr '\n' ' ')"

@@ -1,0 +1,53 @@
+/* EliteLinux: дополнения к теме Elite (Colloid) — меню Whisker и панель Xfce.
+ * Добавляется в конец gtk-3.0/gtk.css тёмной и светлой темы при сборке (build.sh). */
+
+/* --- меню «Пуск» (Whisker): просторнее и мягче --- */
+#whiskermenu-window {
+  border-radius: 16px;
+  padding: 12px;
+}
+#whiskermenu-window treeview.view,
+#whiskermenu-window iconview {
+  -GtkTreeView-vertical-separator: 10px;
+  -GtkTreeView-horizontal-separator: 10px;
+  padding: 4px 6px;
+}
+#whiskermenu-window treeview.view:selected,
+#whiskermenu-window treeview.view:hover {
+  border-radius: 10px;
+}
+#whiskermenu-window .category-button,
+#whiskermenu-window button.category-button {
+  padding: 9px 14px;
+  margin: 1px 0;
+  border-radius: 10px;
+}
+#whiskermenu-window entry {
+  min-height: 38px;
+  border-radius: 12px;
+  margin: 4px 0;
+}
+#whiskermenu-window .commands-area button,
+#whiskermenu-window button.command-button {
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 10px;
+}
+#whiskermenu-window .profile-username,
+#whiskermenu-window label.profile-username {
+  font-weight: 600;
+}
+
+/* --- панель: одинаковые отступы у кнопки меню, ярлыков и трея --- */
+.xfce4-panel button,
+.xfce4-panel .flat {
+  padding: 4px 7px;
+  margin: 2px 1px;
+  border-radius: 10px;
+}
+.xfce4-panel #whiskermenu-button {
+  padding: 4px 9px;
+}
+.xfce4-panel .tasklist button {
+  padding: 4px 12px;
+}

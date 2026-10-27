@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- EliteLinux: одна нижняя панель в стиле Windows.
-     Меню Whisker с короной | закреплённые программы | окна | трей, звук, раскладка, часы -->
+     Меню Whisker с короной | закреплённые программы | окна | трей, раскладка, звук, часы -->
 <channel name="xfce4-panel" version="1.0">
   <property name="configver" type="int" value="2"/>
   <property name="panels" type="array">
@@ -27,9 +27,7 @@
         <value type="int" value="12"/>
         <value type="int" value="13"/>
         <value type="int" value="14"/>
-        <value type="int" value="15"/>
         <value type="int" value="16"/>
-        <value type="int" value="17"/>
       </property>
     </property>
   </property>
@@ -45,8 +43,8 @@
       <property name="position-profile-alternate" type="bool" value="true"/>
       <property name="launcher-show-description" type="bool" value="false"/>
       <property name="hover-switch-category" type="bool" value="true"/>
-      <property name="menu-width" type="int" value="560"/>
-      <property name="menu-height" type="int" value="560"/>
+      <property name="menu-width" type="int" value="700"/>
+      <property name="menu-height" type="int" value="620"/>
       <property name="show-command-menueditor" type="bool" value="false"/>
       <property name="show-command-switchuser" type="bool" value="false"/>
       <property name="show-command-hibernate" type="bool" value="false"/>
@@ -64,7 +62,7 @@
       </property>
     </property>
     <property name="plugin-2" type="string" value="separator">
-      <property name="style" type="uint" value="0"/>
+      <property name="style" type="uint" value="1"/>
     </property>
     <!-- закреплённые программы; .desktop лежат в /etc/xdg/xfce4/panel/launcher-N/ -->
     <property name="plugin-3" type="string" value="launcher">
@@ -98,7 +96,7 @@
       </property>
     </property>
     <property name="plugin-9" type="string" value="separator">
-      <property name="style" type="uint" value="0"/>
+      <property name="style" type="uint" value="1"/>
     </property>
     <property name="plugin-10" type="string" value="tasklist">
       <property name="grouping" type="uint" value="1"/>
@@ -112,7 +110,7 @@
     </property>
     <property name="plugin-12" type="string" value="systray">
       <property name="square-icons" type="bool" value="true"/>
-      <property name="icon-size" type="int" value="20"/>
+      <property name="icon-size" type="int" value="18"/>
     </property>
     <property name="plugin-13" type="string" value="xkb">
       <property name="display-type" type="uint" value="2"/>
@@ -123,7 +121,6 @@
       <property name="enable-keyboard-shortcuts" type="bool" value="true"/>
       <property name="show-notifications" type="bool" value="true"/>
     </property>
-    <property name="plugin-15" type="string" value="notification-plugin"/>
     <property name="plugin-16" type="string" value="clock">
       <property name="mode" type="uint" value="2"/>
       <property name="digital-layout" type="uint" value="1"/>
@@ -132,6 +129,5 @@
       <property name="digital-time-font" type="string" value="Inter Semi-Bold 10"/>
       <property name="digital-date-font" type="string" value="Inter 8"/>
     </property>
-    <property name="plugin-17" type="string" value="showdesktop"/>
   </property>
 </channel>
