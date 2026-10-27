@@ -19,3 +19,7 @@ if [ -e /usr/bin/anydesk ]; then
   systemctl disable anydesk.service || true
   rm -f /etc/xdg/autostart/anydesk*.desktop
 fi
+
+# Яндекс Браузер ставит автозапуск «первичной настройки», который открывает браузер
+# при каждом входе — убираем
+rm -f /etc/xdg/autostart/yandex-browser_user_setup.desktop

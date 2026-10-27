@@ -25,6 +25,21 @@ while IFS=: read -r login name groups hash; do
 done < /etc/elite/accounts
 rm -f /etc/elite/accounts
 
+# аватар с короной (AccountsService — для меню Whisker и экрана входа)
+mkdir -p /var/lib/AccountsService/icons /var/lib/AccountsService/users
+for u in manager eliteadmin; do
+    cp /usr/share/pixmaps/elite-avatar.png "/var/lib/AccountsService/icons/$u"
+    printf '[User]\nIcon=/var/lib/AccountsService/icons/%s\nSystemAccount=false\n' "$u" \
+        > "/var/lib/AccountsService/users/$u"
+    cp /usr/share/pixmaps/elite-avatar.png "/home/$u/.face"
+    chown "$u:$u" "/home/$u/.face"
+done
+
+# на экране входа по умолчанию выбран «Менеджер»
+install -d -o lightdm -g lightdm /var/lib/lightdm/.cache/lightdm-gtk-greeter
+printf '[greeter]\nlast-user=manager\n' > /var/lib/lightdm/.cache/lightdm-gtk-greeter/state
+chown lightdm:lightdm /var/lib/lightdm/.cache/lightdm-gtk-greeter/state
+
 # --- имя компьютера: elite- + последние 6 символов MAC первой физической сетевой карты ---
 mac=""
 for d in /sys/class/net/*; do

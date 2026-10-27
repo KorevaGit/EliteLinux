@@ -2,8 +2,18 @@
 # EliteLinux: фирменные обои по умолчанию и кэш иконок.
 set -e
 
-# xfdesktop в Debian берёт обои по умолчанию из альтернативы desktop-background,
-# поэтому так они применяются к любому монитору, без привязки к его имени.
+# xfdesktop 4.20 (Debian 13) берёт обои по умолчанию из файлов, путь к которым
+# зашит в программу (проверено в виртуалке 27.10.2026 — альтернатива
+# desktop-background им не используется). Подменяем эти файлы нашими обоями
+# через dpkg-divert: так обои ставятся на любой монитор без привязки к его имени,
+# а обновление xfdesktop4-data не вернёт стандартные.
+for f in xfce-x.svg xfce-teal.png xfce-stripes.png xfce-verticals.png; do
+    target=/usr/share/backgrounds/xfce/$f
+    dpkg-divert --quiet --local --rename --add --divert "$target.xfce" "$target"
+    ln -sf /usr/share/backgrounds/elite/elite-desktop.png "$target"
+done
+
+# экран входа и прочее, что смотрит на desktop-base
 update-alternatives --install /usr/share/images/desktop-base/desktop-background \
   desktop-background /usr/share/backgrounds/elite/elite-desktop.png 100
 update-alternatives --set desktop-background /usr/share/backgrounds/elite/elite-desktop.png

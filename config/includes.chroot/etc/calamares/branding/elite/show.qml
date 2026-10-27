@@ -18,7 +18,10 @@ Presentation {
     }
     function onLeave() {}
 
-    Timer { interval: 12000; running: presentation.activatedInCalamares; repeat: true; onTriggered: presentation.goToNextSlide() }
+    // фон всей области слайд-шоу (по умолчанию она белая, слайд — карточкой внутри)
+    Rectangle { anchors.fill: parent; color: "#232325"; z: -1 }
+
+    Timer { interval: 12000; running: true; repeat: true; onTriggered: presentation.goToNextSlide() }
 
     component InfoSlide: Slide {
         id: slide
