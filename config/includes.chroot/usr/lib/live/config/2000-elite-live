@@ -5,3 +5,6 @@
 rm -f /etc/xdg/autostart/elitesip.desktop
 # пароль AnyDesk нужен только устанавливаемой системе — в live-сессии убираем
 rm -f /etc/elite/anydesk-password
+# блокировка экрана: на флешке пароль пользователя никто не знает, а установка идёт
+# 10 минут — экран блокировался прямо поверх установщика
+rm -f /etc/xdg/autostart/xfce4-screensaver.desktop
