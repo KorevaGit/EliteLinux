@@ -1,0 +1,4 @@
+# EliteLinux: планировщик ввода-вывода — BFQ для HDD (отзывчивость интерфейса при
+# нагрузке на диск), mq-deadline для SSD; NVMe оставляем как есть (none).
+ACTION=="add|change", KERNEL=="sd[a-z]*|vd[a-z]*", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
+ACTION=="add|change", KERNEL=="sd[a-z]*|vd[a-z]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"

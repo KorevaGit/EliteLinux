@@ -40,6 +40,12 @@ install -d -o lightdm -g lightdm /var/lib/lightdm/.cache/lightdm-gtk-greeter
 printf '[greeter]\nlast-user=manager\n' > /var/lib/lightdm/.cache/lightdm-gtk-greeter/state
 chown lightdm:lightdm /var/lib/lightdm/.cache/lightdm-gtk-greeter/state
 
+# --- пароль AnyDesk задаётся при первой загрузке (нужна запущенная служба AnyDesk) ---
+if [ -s /etc/elite/anydesk-password ]; then
+    chmod 600 /etc/elite/anydesk-password
+    systemctl enable elite-anydesk-password.service
+fi
+
 # --- имя компьютера: elite- + последние 6 символов MAC первой физической сетевой карты ---
 mac=""
 for d in /sys/class/net/*; do

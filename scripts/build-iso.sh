@@ -18,7 +18,10 @@ if [[ ! -f "$SECRET_ACCOUNTS" ]]; then
   exit 1
 fi
 install -m 600 "$SECRET_ACCOUNTS" "$IMAGE_ACCOUNTS"
-trap 'rm -f "$IMAGE_ACCOUNTS"' EXIT
+# пароль неконтролируемого доступа AnyDesk (необязательно) — задаётся при первой загрузке
+IMAGE_ANYDESK="${ROOT}/config/includes.chroot/etc/elite/anydesk-password"
+[[ -f "${ROOT}/secrets/anydesk-password" ]] && install -m 600 "${ROOT}/secrets/anydesk-password" "$IMAGE_ANYDESK"
+trap 'rm -f "$IMAGE_ACCOUNTS" "$IMAGE_ANYDESK"' EXIT
 
 docker run --rm --privileged \
   -v "${ROOT}:/build" -w /build \

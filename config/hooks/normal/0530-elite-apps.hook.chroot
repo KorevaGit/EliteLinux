@@ -23,3 +23,19 @@ fi
 # Яндекс Браузер ставит автозапуск «первичной настройки», который открывает браузер
 # при каждом входе — убираем
 rm -f /etc/xdg/autostart/yandex-browser_user_setup.desktop
+
+# экран входа без пункта «Другие…»: основной lightdm.conf читается последним
+# (и его правит Calamares), поэтому ручной ввод логина выключаем и в нём
+sed -i 's/^#\?greeter-show-manual-login=.*/greeter-show-manual-login=false/' /etc/lightdm/lightdm.conf
+grep -q '^greeter-show-manual-login=false' /etc/lightdm/lightdm.conf
+
+# лишние на офисном ПК службы и таймеры — меньше нагрузки на диск при старте
+for unit in ModemManager.service cups-browsed.service man-db.timer e2scrub_all.timer \
+            e2scrub_reap.service; do
+    systemctl disable "$unit" 2>/dev/null || true
+done
+# preload — предзагрузка часто используемых программ в память
+systemctl enable preload.service 2>/dev/null || true
+
+# пароль AnyDesk для установщика — только root
+[ -e /etc/elite/anydesk-password ] && chmod 600 /etc/elite/anydesk-password || true

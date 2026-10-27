@@ -3,3 +3,5 @@
 # Мастер первого запуска EliteSIP не должен открываться поверх установщика —
 # в установленной системе автозапуск EliteSIP остаётся.
 rm -f /etc/xdg/autostart/elitesip.desktop
+# пароль AnyDesk нужен только устанавливаемой системе — в live-сессии убираем
+rm -f /etc/elite/anydesk-password
