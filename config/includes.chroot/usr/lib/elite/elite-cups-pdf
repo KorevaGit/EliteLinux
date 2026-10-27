@@ -1,0 +1,14 @@
+#!/bin/sh
+# EliteLinux: создаёт очередь «PDF» (cups-pdf) при первой загрузке.
+# Пакет printer-driver-cups-pdf делает это сам, только если CUPS запущен во время установки, —
+# при сборке образа это не так. Удалённую пользователем очередь заново не создаём (метка).
+set -eu
+export LC_ALL=C
+lpstat -e 2>/dev/null | grep -qx PDF || {
+    lpadmin -p PDF -v cups-pdf:/ -m lsb/usr/cups-pdf/CUPS-PDF_opt.ppd \
+        -D "Печать в PDF" -L "Папка PDF в домашнем каталоге" -E
+    # реальный принтер, если он уже был, остаётся по умолчанию
+    lpstat -d 2>/dev/null | grep -q '^system default destination:' || lpadmin -d PDF
+}
+mkdir -p /var/lib/elite
+touch /var/lib/elite/cups-pdf-done

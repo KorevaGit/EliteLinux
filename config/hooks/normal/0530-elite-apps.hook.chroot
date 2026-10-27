@@ -36,6 +36,7 @@ for unit in ModemManager.service cups-browsed.service man-db.timer e2scrub_all.t
 done
 # preload — предзагрузка часто используемых программ в память
 systemctl enable preload.service 2>/dev/null || true
+systemctl enable elite-cups-pdf.service
 
 # пароль AnyDesk для установщика — только root
 [ -e /etc/elite/anydesk-password ] && chmod 600 /etc/elite/anydesk-password || true

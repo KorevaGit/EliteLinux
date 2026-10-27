@@ -4,8 +4,12 @@
 # нельзя — кладём .deb (с зависимостями и подписанными для Secure Boot) в
 # /usr/share/elite/efi-debs, а установщик ставит их на UEFI-машинах (elite-bootloader-config).
 set -e
-apt-get -y --download-only install grub-efi-amd64 grub-efi-amd64-signed shim-signed efibootmgr mokutil
-mkdir -p /usr/share/elite/efi-debs
-cp /var/cache/apt/archives/*.deb /usr/share/elite/efi-debs/
-apt-get clean
-ls /usr/share/elite/efi-debs | grep -q '^grub-efi-amd64_'
+# отдельный пустой кэш: в общем /var/cache/apt/archives лежат все пакеты образа
+D=/usr/share/elite/efi-debs
+mkdir -p "$D/partial"
+apt-get -y --download-only -o Dir::Cache::archives="$D" \
+    install grub-efi-amd64 grub-efi-amd64-signed shim-signed efibootmgr mokutil
+rm -rf "$D/partial" "$D/lock"
+ls "$D" | grep -q '^grub-efi-amd64_'
+# только загрузчик и его зависимости, а не весь кэш apt
+[ "$(ls "$D"/*.deb | wc -l)" -lt 40 ]

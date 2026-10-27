@@ -3,12 +3,14 @@
 # Отменяет все задания, чистит спул, перезапускает CUPS и снимает принтеры с паузы
 # (после ошибки CUPS ставит принтер на паузу — частая причина «ничего не печатает»).
 set -u
+# вывод lpstat переводится («принтер …») — разбираем английский
+export LC_ALL=C
 cancel -a -x 2>/dev/null || true
 systemctl stop cups.service cups.socket 2>/dev/null || true
 find /var/spool/cups -maxdepth 1 -type f \( -name 'c*' -o -name 'd*' \) -delete 2>/dev/null || true
 systemctl start cups.socket cups.service
 sleep 2
-for p in $(lpstat -p 2>/dev/null | awk '/^printer/ {print $2}'); do
+for p in $(lpstat -e 2>/dev/null); do
     cupsenable "$p" 2>/dev/null || true
     cupsaccept "$p" 2>/dev/null || true
 done

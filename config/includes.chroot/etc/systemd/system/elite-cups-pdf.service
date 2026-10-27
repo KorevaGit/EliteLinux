@@ -1,0 +1,12 @@
+[Unit]
+Description=EliteLinux: принтер «Печать в PDF» (разово)
+ConditionPathExists=!/var/lib/elite/cups-pdf-done
+After=cups.service
+Requires=cups.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/elite/elite-cups-pdf
+
+[Install]
+WantedBy=multi-user.target

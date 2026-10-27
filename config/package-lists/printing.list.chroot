@@ -8,3 +8,5 @@ libsane-hpaio
 avahi-daemon
 libnss-mdns
 printer-driver-cups-pdf
+# уведомление «Очередь печати сброшена»
+libnotify-bin
