@@ -40,3 +40,8 @@ systemctl enable elite-cups-pdf.service
 
 # пароль AnyDesk для установщика — только root
 [ -e /etc/elite/anydesk-password ] && chmod 600 /etc/elite/anydesk-password || true
+
+# «Браузер иконок» из yad (yad нужен экрану «Извлеките флешку») — убрать из меню,
+# иначе в меню появляется категория «Разработка» с одним этим пунктом
+d=/usr/share/applications/yad-icon-browser.desktop
+[ -e "$d" ] && echo "NoDisplay=true" >> "$d" || true

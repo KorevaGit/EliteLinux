@@ -48,6 +48,9 @@
       <property name="category-icon-size" type="int" value="1"/>
       <property name="menu-width" type="int" value="700"/>
       <property name="menu-height" type="int" value="620"/>
+      <!-- 99, не 100: только с прозрачностью Whisker берёт окно с альфа-каналом,
+           иначе поле под тень вокруг скруглённого меню рисуется чёрной рамкой -->
+      <property name="menu-opacity" type="int" value="99"/>
       <property name="show-command-menueditor" type="bool" value="false"/>
       <property name="show-command-switchuser" type="bool" value="false"/>
       <property name="show-command-hibernate" type="bool" value="false"/>

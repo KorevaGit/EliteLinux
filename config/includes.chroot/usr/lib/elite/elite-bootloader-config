@@ -10,8 +10,10 @@ if [ -d /sys/firmware/efi/efivars ]; then
     echo " * UEFI: ставим grub-efi из образа"
     mkdir -p "$T/tmp/elite-efi-debs"
     cp /usr/share/elite/efi-debs/*.deb "$T/tmp/elite-efi-debs/"
+    # без --no-download: с ним apt не «скачивает» даже локальные .deb (код 100).
+    # Списков пакетов в системе нет, так что из сети он всё равно ничего не возьмёт.
     DEBIAN_FRONTEND=noninteractive chroot "$T" sh -c \
-        'apt-get -y --no-download install /tmp/elite-efi-debs/*.deb'
+        'apt-get -y install /tmp/elite-efi-debs/*.deb'
     rm -rf "$T/tmp/elite-efi-debs"
 fi
 # пакеты для UEFI в установленной системе не нужны
