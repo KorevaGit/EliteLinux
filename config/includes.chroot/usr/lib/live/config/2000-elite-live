@@ -8,3 +8,11 @@ rm -f /etc/elite/anydesk-password
 # блокировка экрана: на флешке пароль пользователя никто не знает, а установка идёт
 # 10 минут — экран блокировался прямо поверх установщика
 rm -f /etc/xdg/autostart/xfce4-screensaver.desktop
+# и без гашения экрана (X DPMS): иначе к концу установки экран чёрный
+cat > /etc/xdg/autostart/elite-live-noblank.desktop <<'EOD'
+[Desktop Entry]
+Type=Application
+Name=EliteLinux: не гасить экран на флешке
+Exec=xset s off -dpms
+NoDisplay=true
+EOD
