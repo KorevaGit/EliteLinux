@@ -43,9 +43,20 @@ rm -rf "$DIST" && mkdir -p "$DIST"
 # Кнопки окна в обычном (Windows-) стиле: свернуть/развернуть/закрыть справа
 "$WORK/colloid/install.sh" -d "$DIST" -n Elite -t default -c dark light --tweaks normal
 
-# дополнения EliteLinux (меню Whisker, панель) — в конец CSS обеих тем
+# дополнения EliteLinux (меню Whisker, панель) — в конец CSS обеих тем.
+# И в gtk-dark.css: панель в тёмном режиме (dark-mode) грузит именно его
 for t in Elite-Dark Elite-Light; do
-  cat "${HERE}/elite-extra.css" >> "$DIST/$t/gtk-3.0/gtk.css"
+  for css in gtk.css gtk-dark.css; do
+    cat "${HERE}/elite-extra.css" >> "$DIST/$t/gtk-3.0/$css"
+  done
+done
+
+# тема экрана входа: тёмная + правки для работы без композитора
+rm -rf "$DIST/Elite-Greeter"
+cp -r "$DIST/Elite-Dark" "$DIST/Elite-Greeter"
+sed -i 's/^Name=.*/Name=Elite-Greeter/' "$DIST/Elite-Greeter/index.theme"
+for css in gtk.css gtk-dark.css; do
+  cat "${HERE}/elite-greeter.css" >> "$DIST/Elite-Greeter/gtk-3.0/$css"
 done
 
 # верхние углы рамки окон Xfwm4 — тем же радиусом, что и у окон GTK

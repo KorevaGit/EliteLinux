@@ -1,0 +1,13 @@
+# EliteLinux: имя файла — то, под которым Telegram при первом запуске сам создаёт
+# ярлык в ~/.local/share/applications (хэш md5 пути /opt/telegram/Telegram).
+# Совпадение имён — и его ярлык заменяет этот, а не появляется в меню вторым «Telegram».
+[Desktop Entry]
+Name=Telegram
+Comment=Мессенджер Telegram
+Exec=/opt/telegram/Telegram -- %u
+Icon=telegram
+Terminal=false
+Type=Application
+Categories=Network;InstantMessaging;Chat;
+MimeType=x-scheme-handler/tg;x-scheme-handler/tonsite;
+StartupWMClass=TelegramDesktop

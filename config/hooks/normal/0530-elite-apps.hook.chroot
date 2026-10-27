@@ -45,3 +45,12 @@ systemctl enable elite-cups-pdf.service
 # иначе в меню появляется категория «Разработка» с одним этим пунктом
 d=/usr/share/applications/yad-icon-browser.desktop
 [ -e "$d" ] && echo "NoDisplay=true" >> "$d" || true
+
+# EliteSIP: автозапуск — только после настройки рабочего места (elitesip-autostart).
+# Имя файла прежнее: переключатель «Запускать при входе» в EliteSIP перекрывает именно его
+A=/etc/xdg/autostart/elitesip.desktop
+if [ -e "$A" ]; then
+  dpkg-divert --quiet --local --rename --add --divert "$A.elite-orig" "$A"
+  sed 's|^Exec=.*|Exec=/usr/lib/elite/elitesip-autostart|' "$A.elite-orig" > "$A"
+  grep -q '^Exec=/usr/lib/elite/elitesip-autostart' "$A"
+fi

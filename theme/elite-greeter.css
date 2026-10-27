@@ -1,0 +1,24 @@
+/* EliteLinux: тема экрана входа (Elite-Greeter = Elite-Dark + этот файл, theme/build.sh).
+ * На экране входа нет композитора: скруглённое всплывающее меню выбора учётки рисуется
+ * с чёрными углами. Здесь меню без скругления и тени — ровный тёмный список. */
+menu,
+.menu,
+.context-menu,
+window.popup,
+window.popup decoration {
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+menu {
+  padding: 6px;
+  background-color: #232325;
+}
+menu menuitem {
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 8px;
+}
+menu menuitem:hover {
+  background-color: alpha(#d4b06a, 0.18);
+}

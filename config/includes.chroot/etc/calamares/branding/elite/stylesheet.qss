@@ -4,6 +4,8 @@ QPushButton { background-color: #313134; border: 1px solid #3d3d41; border-radiu
 QPushButton:hover { background-color: #3d3d41; }
 QPushButton:default, #view-button-next, #view-button-install { background-color: #d4b06a; color: #1a1405; border: none; font-weight: 600; }
 QPushButton:disabled { color: #6b6b71; }
+/* неактивная «Далее» (экран «Готово») — серой, а не золотой: правило выше её перекрашивает */
+#view-button-next:disabled, #view-button-install:disabled { background-color: #2a2a2d; color: #6b6b71; font-weight: normal; }
 QComboBox, QListView, QTreeView, QTableView { background-color: #1c1c1e; border: 1px solid #3d3d41; border-radius: 6px; padding: 4px; }
 QListView::item:selected, QTreeView::item:selected { background-color: #d4b06a; color: #1a1405; }
 QRadioButton::indicator:checked, QCheckBox::indicator:checked { background-color: #d4b06a; border-radius: 6px; }

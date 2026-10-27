@@ -15,7 +15,7 @@
   border-radius: 12px;
   margin: 4px 0;
 }
-/* строки списка программ: значки 24 px (launcher-icon-size 2) и воздух между строками */
+/* строки списка программ: мелкие значки (launcher-icon-size 1) и воздух между строками */
 #whiskermenu-window treeview.view {
   -GtkTreeView-vertical-separator: 14px;
 }
@@ -54,7 +54,7 @@
   padding: 4px 12px;
 }
 
-/* трей: равные промежутки между сетью, раскладкой, звуком и часами (~27 px)
+/* трей: равные промежутки между значками, раскладкой, звуком и часами (~27 px)
  * и отступ справа у часов. У самих плагинов (XfcePanelPlugin) отступы не работают —
  * задаём их кнопкам внутри; ячейку значков трея держит square-icons. */
 .xfce4-panel #xkb-13 button,
@@ -65,5 +65,5 @@
   padding: 0 9px;
 }
 .xfce4-panel #clock-button {
-  padding: 0 14px;
+  padding: 0 14px 0 24px;
 }

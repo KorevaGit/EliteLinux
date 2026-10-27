@@ -1,0 +1,8 @@
+#!/bin/sh
+# EliteLinux: автозапуск EliteSIP при входе — только когда рабочее место уже настроено
+# (администратор прошёл мастер «Настройка рабочего места»). До этого EliteSIP при каждом
+# входе открывал мастер поверх рабочего стола. Настроить: ярлык EliteSIP.
+# Признак — Setup.IsCompleted в ~/.local/share/EliteSIP/settings.json (AppSettings).
+SETTINGS="${XDG_DATA_HOME:-$HOME/.local/share}/EliteSIP/settings.json"
+grep -A3 '"Setup"' "$SETTINGS" 2>/dev/null | grep -q '"IsCompleted": *true' || exit 0
+exec /opt/elitesip/EliteSIP --autostart

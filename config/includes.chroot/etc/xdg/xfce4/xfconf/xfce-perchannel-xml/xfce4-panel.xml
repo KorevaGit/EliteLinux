@@ -11,7 +11,9 @@
       <property name="length" type="uint" value="100"/>
       <property name="position-locked" type="bool" value="true"/>
       <property name="size" type="uint" value="44"/>
-      <property name="icon-size" type="uint" value="28"/>
+      <!-- 24: по нему же рисуется значок звука; значки трея — 20 (plugin-12),
+           так видимые значки сети, звука и программ выходят одного размера (~16–19 px) -->
+      <property name="icon-size" type="uint" value="24"/>
       <property name="plugin-ids" type="array">
         <value type="int" value="1"/>
         <value type="int" value="2"/>
@@ -45,8 +47,9 @@
       <property name="position-profile-alternate" type="bool" value="true"/>
       <property name="launcher-show-description" type="bool" value="false"/>
       <property name="hover-switch-category" type="bool" value="true"/>
-      <!-- значки программ 24 px (2), категорий (1); воздух между строками — в elite-extra.css -->
-      <property name="launcher-icon-size" type="int" value="2"/>
+      <!-- значки программ и категорий — мелкие (1), как в меню Windows; 2 оказалось
+           крупно и тесно. Воздух между строками — в elite-extra.css -->
+      <property name="launcher-icon-size" type="int" value="1"/>
       <property name="category-icon-size" type="int" value="1"/>
       <property name="menu-width" type="int" value="700"/>
       <property name="menu-height" type="int" value="620"/>
@@ -62,7 +65,7 @@
       <property name="favorites" type="array">
         <value type="string" value="yandex-browser.desktop"/>
         <value type="string" value="google-chrome.desktop"/>
-        <value type="string" value="org.telegram.desktop.desktop"/>
+        <value type="string" value="org.telegram.desktop._023d4009d7ff6bfa2363e883ec2f16df.desktop"/>
         <value type="string" value="max.desktop"/>
         <value type="string" value="elitesip.desktop"/>
         <value type="string" value="Zoom.desktop"/>
@@ -120,7 +123,7 @@
     </property>
     <property name="plugin-12" type="string" value="systray">
       <property name="square-icons" type="bool" value="true"/>
-      <property name="icon-size" type="int" value="18"/>
+      <property name="icon-size" type="int" value="20"/>
     </property>
     <property name="plugin-13" type="string" value="xkb">
       <property name="display-type" type="uint" value="2"/>

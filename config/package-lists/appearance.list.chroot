@@ -13,3 +13,7 @@ plymouth
 plymouth-themes
 lightdm
 lightdm-gtk-greeter
+# блокировка экрана (кнопка «Заблокировать экран» — xflock4 — без неё не работает)
+xfce4-screensaver
+# «Профиль» по щелчку на имени в меню: аватар, имя, смена пароля
+mugshot
