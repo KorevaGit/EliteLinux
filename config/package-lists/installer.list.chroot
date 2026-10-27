@@ -9,4 +9,7 @@ pciutils
 pci.ids
 yad
 eject
+# раздел EFI (FAT32) и загрузчик UEFI без интернета
+dosfstools
+efibootmgr
 rsync

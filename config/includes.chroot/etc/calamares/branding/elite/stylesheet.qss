@@ -10,3 +10,5 @@ QRadioButton::indicator:checked, QCheckBox::indicator:checked { background-color
 QProgressBar { background-color: #1c1c1e; border: none; border-radius: 4px; height: 8px; text-align: center; }
 QProgressBar::chunk { background-color: #d4b06a; border-radius: 4px; }
 #sidebarApp { background-color: #161618; }
+/* логотип в боковой панели — без фона окна (иначе светлый квадрат на тёмной панели) */
+#logoApp { background-color: transparent; }

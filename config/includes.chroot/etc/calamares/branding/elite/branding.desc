@@ -24,7 +24,8 @@ strings:
     donateUrl:           ""
 
 images:
-    productLogo:    "logo.png"
+    # квадрат с прозрачными полями: Calamares растягивает логотип в 80×80 без пропорций
+    productLogo:    "sidebar-logo.png"
     productIcon:    "logo.png"
     productWelcome: "wordmark.png"
 

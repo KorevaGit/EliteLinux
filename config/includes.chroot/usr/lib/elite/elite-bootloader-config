@@ -1,0 +1,20 @@
+#!/bin/sh
+# EliteLinux: подготовка загрузчика вместо модуля bootloader-config из Debian.
+# Тот на UEFI делает «apt-get install grub-efi» из интернета; у нас установка без сети —
+# пакеты UEFI лежат в образе (/usr/share/elite/efi-debs, хук 0540).
+# Запускается Calamares вне chroot: $1 — корень устанавливаемой системы.
+set -eu
+T="$1"
+
+if [ -d /sys/firmware/efi/efivars ]; then
+    echo " * UEFI: ставим grub-efi из образа"
+    mkdir -p "$T/tmp/elite-efi-debs"
+    cp /usr/share/elite/efi-debs/*.deb "$T/tmp/elite-efi-debs/"
+    DEBIAN_FRONTEND=noninteractive chroot "$T" sh -c \
+        'apt-get -y --no-download install /tmp/elite-efi-debs/*.deb'
+    rm -rf "$T/tmp/elite-efi-debs"
+fi
+# пакеты для UEFI в установленной системе не нужны
+rm -rf "$T/usr/share/elite/efi-debs"
+
+chroot "$T" /usr/sbin/update-grub

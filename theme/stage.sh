@@ -34,6 +34,7 @@ mv "${CHROOT}/usr/share/plymouth/themes/elite/login-bg.png" \
 
 # логотип и надпись для установщика Calamares (экран приветствия и слайды)
 cp "${HERE}/plymouth/elite/crown.png"    "${CHROOT}/etc/calamares/branding/elite/logo.png"
+cp "${BRANDING}/installer-logo.png"       "${CHROOT}/etc/calamares/branding/elite/sidebar-logo.png"
 cp "${HERE}/plymouth/elite/wordmark.png" "${CHROOT}/etc/calamares/branding/elite/wordmark.png"
 
 echo "Оформление разложено в ${CHROOT}"
