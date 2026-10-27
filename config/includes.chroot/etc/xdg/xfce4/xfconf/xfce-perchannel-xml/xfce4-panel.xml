@@ -95,7 +95,7 @@
     </property>
     <property name="plugin-6" type="string" value="launcher">
       <property name="items" type="array">
-        <value type="string" value="org.telegram.desktop.desktop"/>
+        <value type="string" value="org.telegram.desktop._023d4009d7ff6bfa2363e883ec2f16df.desktop"/>
       </property>
     </property>
     <property name="plugin-7" type="string" value="launcher">
