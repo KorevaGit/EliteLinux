@@ -1,0 +1,9 @@
+#!/bin/sh
+# EliteLinux: проверка прав системных файлов перед упаковкой образа.
+# Однажды базовая система пришла из кэша с владельцем UID 1000 — в установленной
+# системе «/» и /usr принадлежали «Менеджеру», а su и passwd были без setuid.
+set -e
+[ "$(stat -c %u /)" = 0 ] && [ "$(stat -c %u /usr/bin)" = 0 ]
+[ -u /usr/bin/su ] && [ -u /usr/bin/passwd ] && [ -u /usr/bin/sudo ]
+n=$(find / -xdev -uid 1000 -not -path '/home/*' -not -path '/tmp/*' -not -path '/proc/*' 2>/dev/null | wc -l)
+[ "$n" = 0 ] || { echo "Файлов во владении UID 1000 вне /home: $n" >&2; exit 1; }
