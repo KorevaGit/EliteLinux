@@ -4,7 +4,7 @@
 set -u
 export LC_NUMERIC=C   # точка в дробях — иначе ломается JSON
 
-dmi() { tr -d '\n' < "/sys/class/dmi/id/$1" 2>/dev/null | sed 's/  */ /g'; }
+dmi() { tr -d '\n' 2>/dev/null < "/sys/class/dmi/id/$1" | sed 's/  */ /g'; }
 clean() { set -- "$(echo "$1" | sed 's/^ *//; s/ *$//')"; case "$1" in ""|"To be filled by O.E.M."|"Default string"|"System Product Name"|"None"|"0") echo "—" ;; *) echo "$1" ;; esac; }
 jstr() { printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'; }
 
