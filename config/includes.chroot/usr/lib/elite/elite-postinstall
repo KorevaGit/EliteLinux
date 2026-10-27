@@ -36,6 +36,19 @@ for u in manager eliteadmin; do
     chown "$u:$u" "/home/$u/.face"
 done
 
+# хранилище паролей (gnome-keyring) — открытое, без пароля. Иначе при первом запуске
+# MAX и браузеров всплывает «Choose password for new keyring», а с паролем учётки
+# в Xfce оно при входе не разблокируется. Файлы — в домашнем каталоге, только владельцу.
+for u in manager eliteadmin; do
+    d="/home/$u/.local/share/keyrings"
+    install -d -m 700 -o "$u" -g "$u" "/home/$u/.local" "/home/$u/.local/share" "$d"
+    printf '[keyring]\ndisplay-name=login\nctime=0\nmtime=0\nlock-on-idle=false\nlock-after=false\n' \
+        > "$d/login.keyring"
+    echo login > "$d/default"
+    chown "$u:$u" "$d/login.keyring" "$d/default"
+    chmod 600 "$d/login.keyring" "$d/default"
+done
+
 # на экране входа по умолчанию выбран «Менеджер»
 install -d -o lightdm -g lightdm /var/lib/lightdm/.cache/lightdm-gtk-greeter
 printf '[greeter]\nlast-user=manager\n' > /var/lib/lightdm/.cache/lightdm-gtk-greeter/state

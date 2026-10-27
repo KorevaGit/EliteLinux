@@ -26,7 +26,7 @@ max
 anydesk
 elitesip
 # хранилище паролей (Secret Service): без него MAX падает при запуске
-# («libsecret unavailable»); при входе разблокируется паролем учётки (PAM)
+# («libsecret unavailable»); хранилище создаётся открытым (elite-postinstall)
 gnome-keyring
 libpam-gnome-keyring
 libsecret-1-0
