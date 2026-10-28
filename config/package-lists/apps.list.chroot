@@ -30,3 +30,5 @@ elitesip
 gnome-keyring
 libpam-gnome-keyring
 libsecret-1-0
+# gdbus — eliterec-autostart ждёт трей панели
+libglib2.0-bin

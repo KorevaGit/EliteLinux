@@ -1,0 +1,12 @@
+#!/bin/sh
+# EliteLinux: автозапуск EliteRec в трей. EliteRec один раз при старте спрашивает, есть ли трей
+# (StatusNotifierWatcher), и без него сворачивается в панель задач. При входе он стартует раньше
+# панели Xfce, поэтому ждём трей (до 30 с), потом запускаем.
+i=0
+while [ $i -lt 30 ]; do
+    gdbus call --session --dest org.kde.StatusNotifierWatcher --object-path /StatusNotifierWatcher \
+        --method org.freedesktop.DBus.Properties.Get org.kde.StatusNotifierWatcher \
+        IsStatusNotifierHostRegistered 2>/dev/null | grep -q true && break
+    sleep 1; i=$((i + 1))
+done
+exec /opt/eliterec/EliteRec --tray
