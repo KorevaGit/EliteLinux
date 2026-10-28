@@ -1,0 +1,17 @@
+#!/bin/sh
+# EliteLinux: переключение тёмной и светлой темы — сразу везде: окна и панель Xfce
+# (xfconf) и программы, которые узнают тему через портал (gsettings color-scheme).
+#   elite-theme dark | light | toggle (по умолчанию)
+set -u
+cur=$(xfconf-query -c xsettings -p /Net/ThemeName 2>/dev/null)
+mode=${1:-toggle}
+[ "$mode" = toggle ] && { [ "$cur" = Elite-Light ] && mode=dark || mode=light; }
+if [ "$mode" = light ]; then theme=Elite-Light scheme=default dark=false
+else theme=Elite-Dark scheme=prefer-dark dark=true; fi
+xfconf-query -c xsettings -p /Net/ThemeName -s "$theme"
+xfconf-query -c xfwm4 -p /general/theme -s "$theme"
+xfconf-query -c xfce4-panel -p /panels/dark-mode -s "$dark"
+gsettings set org.gnome.desktop.interface gtk-theme "$theme"
+gsettings set org.gnome.desktop.interface color-scheme "$scheme"
+notify-send -i preferences-desktop-theme "Тема: $([ $mode = dark ] && echo тёмная || echo светлая)" \
+    "Открытые программы сменят оформление сами или после перезапуска" 2>/dev/null || true

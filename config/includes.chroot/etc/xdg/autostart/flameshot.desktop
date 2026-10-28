@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Flameshot
+Comment=Снимки экрана: значок в трее, клавиша Print Screen
+Exec=flameshot
+Icon=org.flameshot.Flameshot
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

@@ -72,6 +72,7 @@
         <value type="string" value="libreoffice-writer.desktop"/>
         <value type="string" value="libreoffice-calc.desktop"/>
         <value type="string" value="thunar.desktop"/>
+        <value type="string" value="org.flameshot.Flameshot.desktop"/>
       </property>
     </property>
     <property name="plugin-2" type="string" value="separator">

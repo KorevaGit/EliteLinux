@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Тёмная / светлая тема
+Comment=Переключить оформление системы и программ
+Exec=/usr/lib/elite/elite-theme
+Icon=preferences-desktop-theme
+Terminal=false
+Categories=Settings;DesktopSettings;
+Keywords=тема;тёмная;светлая;оформление;dark;light;

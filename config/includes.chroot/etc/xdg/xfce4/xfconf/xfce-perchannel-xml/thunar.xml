@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EliteLinux: боковая панель «Места» фиксированной ширины (по умолчанию Thunar
+     сжимал её до значков с «…» при открытии папок) -->
+<channel name="thunar" version="1.0">
+  <property name="last-separator-position" type="int" value="210"/>
+  <property name="last-side-pane" type="string" value="ThunarShortcutsPane"/>
+  <property name="misc-side-pane-fixed-width" type="bool" value="true"/>
+  <property name="last-window-width" type="int" value="960"/>
+  <property name="last-window-height" type="int" value="620"/>
+</channel>

@@ -13,7 +13,13 @@ plymouth
 plymouth-themes
 lightdm
 lightdm-gtk-greeter
-# блокировка экрана (кнопка «Заблокировать экран» — xflock4 — без неё не работает)
-xfce4-screensaver
+# блокировка экрана (xflock4 без неё не работает). light-locker, а не xfce4-screensaver:
+# разблокировка — тот же экран входа LightDM, а не второе, непохожее окно
+light-locker
 # «Профиль» по щелчку на имени в меню: аватар, имя, смена пароля
 mugshot
+# тёмная/светлая тема для браузеров, Electron и Avalonia (EliteSIP): они узнают её
+# через портал (color-scheme), а не из темы GTK
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+dconf-cli

@@ -1,0 +1,6 @@
+# EliteLinux: тёмная тема по умолчанию для программ, которые смотрят в настройки GNOME
+# (через портал: Chrome, Яндекс Браузер, Telegram, EliteSIP). Переключатель — elite-theme.
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+gtk-theme='Elite-Dark'
+icon-theme='Elite'

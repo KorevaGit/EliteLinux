@@ -30,8 +30,9 @@ sed -i 's/^#\?greeter-show-manual-login=.*/greeter-show-manual-login=false/' /et
 grep -q '^greeter-show-manual-login=false' /etc/lightdm/lightdm.conf
 
 # лишние на офисном ПК службы и таймеры — меньше нагрузки на диск при старте
+# NetworkManager-wait-online: загрузка не ждёт сети (до 30 с без кабеля)
 for unit in ModemManager.service cups-browsed.service man-db.timer e2scrub_all.timer \
-            e2scrub_reap.service; do
+            e2scrub_reap.service NetworkManager-wait-online.service; do
     systemctl disable "$unit" 2>/dev/null || true
 done
 # preload — предзагрузка часто используемых программ в память
@@ -54,3 +55,11 @@ if [ -e "$A" ]; then
   sed 's|^Exec=.*|Exec=/usr/lib/elite/elitesip-autostart|' "$A.elite-orig" > "$A"
   grep -q '^Exec=/usr/lib/elite/elitesip-autostart' "$A"
 fi
+
+# настройки по умолчанию для gsettings (тёмная тема для программ, см. /etc/dconf/db/local.d)
+dconf update
+
+# автозапуск без пользы на офисном ПК: SSH-агент и смарт-карты из gnome-keyring,
+# каталоги KDE — меньше процессов и памяти после входа
+rm -f /etc/xdg/autostart/gnome-keyring-ssh.desktop /etc/xdg/autostart/gnome-keyring-pkcs11.desktop \
+      /etc/xdg/autostart/xdg-user-dirs-kde.desktop
