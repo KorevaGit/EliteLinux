@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Кладёт в config/packages.chroot сторонние .deb, которых нет в репозиториях:
-# Zoom (с сайта) и EliteSIP (из проекта, с поправленной зависимостью под Debian 13).
+# Zoom (с сайта), EliteRec (из проекта) и EliteSIP (из проекта, с поправленной зависимостью под Debian 13).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -24,6 +24,12 @@ trap 'rm -rf "$tmp"' EXIT
 dpkg-deb -R "$ELITESIP_DEB" "$tmp/pkg"
 sed -i 's/\blibicu74\b/libicu76 | libicu74/' "$tmp/pkg/DEBIAN/control"
 dpkg-deb --root-owner-group -b "$tmp/pkg" "$PKG/elitesip_amd64.deb" >/dev/null
+
+# EliteRec — самый свежий выпуск (release/, не update-test/)
+ELITEREC_DIR="/media/koreva/EliteDev/projects/EliteRec Linux/artifacts/release"
+ELITEREC_DEB="${ELITEREC_DEB:-$(ls -1 "$ELITEREC_DIR"/*/EliteRec-*.deb | sort -V | tail -1)}"
+echo "EliteRec: $(basename "$ELITEREC_DEB")"
+cp "$ELITEREC_DEB" "$PKG/eliterec_amd64.deb"
 
 # пакеты с патчами EliteLinux (patches/) — собираются один раз, долго.
 # После правки патча удалить старый .deb из config/packages.chroot.

@@ -56,6 +56,12 @@ if [ -e "$A" ]; then
   grep -q '^Exec=/usr/lib/elite/elitesip-autostart' "$A"
 fi
 
+# EliteRec: подпись в меню и на ярлыке — «EliteRec - аудиозапись»
+A=/usr/share/applications/eliterec.desktop
+dpkg-divert --quiet --local --rename --add --divert "$A.elite-orig" "$A"
+sed 's|^Name=.*|Name=EliteRec - аудиозапись|' "$A.elite-orig" > "$A"
+grep -q '^Name=EliteRec - аудиозапись' "$A"
+
 # настройки по умолчанию для gsettings (тёмная тема для программ, см. /etc/dconf/db/local.d)
 dconf update
 
