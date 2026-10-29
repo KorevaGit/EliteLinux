@@ -7,3 +7,6 @@ blueman
 libspa-0.2-bluetooth
 # прошивки Bluetooth-адаптеров (Intel — в firmware-iwlwifi, Realtek, Atheros — уже в образе)
 firmware-brcm80211
+# приоритет реального времени для PipeWire — без него на слабых ПК под нагрузкой
+# звук в звонках заикается
+rtkit

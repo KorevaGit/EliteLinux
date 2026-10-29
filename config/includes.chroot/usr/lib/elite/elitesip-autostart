@@ -5,4 +5,4 @@
 # Признак — Setup.IsCompleted в ~/.local/share/EliteSIP/settings.json (AppSettings).
 SETTINGS="${XDG_DATA_HOME:-$HOME/.local/share}/EliteSIP/settings.json"
 grep -A3 '"Setup"' "$SETTINGS" 2>/dev/null | grep -q '"IsCompleted": *true' || exit 0
-exec /opt/elitesip/EliteSIP --autostart
+exec /usr/lib/elite/elite-no-sm /opt/elitesip/EliteSIP --autostart

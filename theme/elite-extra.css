@@ -67,3 +67,8 @@
 .xfce4-panel #clock-button {
   padding: 0 14px 0 24px;
 }
+
+/* кнопки окон в панели задач: подпись на одной высоте со значком (без сдвига вверх) */
+.xfce4-panel .tasklist button label {
+  margin-top: 2px;
+}

@@ -60,7 +60,10 @@ fi
 for pair in "eliterec:EliteRec - аудиозапись" "elitesip:EliteSIP - Телефония"; do
   A=/usr/share/applications/${pair%%:*}.desktop
   dpkg-divert --quiet --local --rename --add --divert "$A.elite-orig" "$A"
-  sed "s|^Name=.*|Name=${pair#*:}|" "$A.elite-orig" > "$A"
+  # Exec через elite-no-sm: программы на Avalonia не отвечают менеджеру сеансов,
+  # и выход/выключение зависали («Менеджер сеансов должен быть в режиме ожидания»)
+  sed -e "s|^Name=.*|Name=${pair#*:}|" -e 's|^Exec=|Exec=/usr/lib/elite/elite-no-sm |' "$A.elite-orig" > "$A"
+  grep -q '^Exec=/usr/lib/elite/elite-no-sm ' "$A"
   grep -q "^Name=${pair#*:}" "$A"
 done
 
@@ -69,6 +72,23 @@ A=/etc/xdg/autostart/eliterec.desktop
 dpkg-divert --quiet --local --rename --add --divert "$A.elite-orig" "$A"
 sed 's|^Exec=.*|Exec=/usr/lib/elite/eliterec-autostart|' "$A.elite-orig" > "$A"
 grep -q '^Exec=/usr/lib/elite/eliterec-autostart' "$A"
+
+# Chrome и Яндекс Браузер: без автоподстройки громкости микрофона (WebRTC AGC) —
+# в звонках браузер сам двигал ползунок микрофона гарнитуры
+for A in /usr/share/applications/google-chrome.desktop /usr/share/applications/yandex-browser.desktop; do
+  [ -e "$A" ] || continue
+  dpkg-divert --quiet --local --rename --add --divert "$A.elite-orig" "$A"
+  sed -E 's#^(Exec=[^ ]+)#\1 --disable-features=WebRtcAllowInputVolumeAdjustment#' "$A.elite-orig" > "$A"
+  grep -q 'WebRtcAllowInputVolumeAdjustment' "$A"
+done
+
+# Blueman: апплет в трее — только на ПК с Bluetooth-адаптером (без адаптера он зря
+# занимал память), служба blueman-mechanism — по запросу через D-Bus, не при загрузке
+A=/etc/xdg/autostart/blueman.desktop
+dpkg-divert --quiet --local --rename --add --divert "$A.elite-orig" "$A"
+sed 's|^Exec=.*|Exec=sh -c "ls /sys/class/bluetooth/hci* >/dev/null 2>\&1 \&\& exec blueman-applet"|' "$A.elite-orig" > "$A"
+grep -q '^Exec=sh -c "ls /sys/class/bluetooth' "$A"
+systemctl disable blueman-mechanism.service 2>/dev/null || true
 
 # настройки по умолчанию для gsettings (тёмная тема для программ, см. /etc/dconf/db/local.d)
 dconf update

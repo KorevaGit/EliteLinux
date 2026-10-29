@@ -18,11 +18,26 @@ done
 CAM="http://${HOST_IP%.*}.51"
 echo "GoPro: $IFACE, камера $CAM"
 
+# уведомление на экран всем, кто вошёл в систему (служба работает от root)
+notify() {
+    for uid in $(loginctl list-users --no-legend 2>/dev/null | awk '$1 >= 1000 {print $1}'); do
+        runuser -u "$(id -nu "$uid")" -- env DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$uid/bus" \
+            notify-send -i camera-web "$1" "$2" 2>/dev/null || true
+    done
+}
+fail() {
+    notify "GoPro: веб-камера не включилась" "$1"
+    echo "GoPro: $1" >&2; exit 1
+}
+[ -e "$GOPRO_VIDEO" ] || fail "Нет виртуальной камеры $GOPRO_VIDEO (модуль v4l2loopback не загружен)."
+
 api() { curl -sf --max-time 5 "$CAM$1" >/dev/null; }
 # управление по USB (на части прошивок включено по умолчанию — ошибку не считаем фатальной)
 api "/gopro/camera/control/wired_usb?p=1" || true
 api "/gopro/webcam/stop" || true
-api "/gopro/webcam/start?res=${GOPRO_RES}&fov=${GOPRO_FOV}&port=${GOPRO_PORT}&protocol=TS"
+api "/gopro/webcam/start?res=${GOPRO_RES}&fov=${GOPRO_FOV}&port=${GOPRO_PORT}&protocol=TS" ||
+    fail "Камера не приняла команду. На GoPro: Настройки → Подключения → USB-подключение → GoPro Connect, затем переподключите кабель."
+notify "GoPro подключена как веб-камера" "В Zoom, браузере и MAX выберите камеру «GoPro»."
 
 exec ffmpeg -hide_banner -loglevel warning -nostdin -threads 1 -fflags nobuffer \
     -i "udp://@0.0.0.0:${GOPRO_PORT}?overrun_nonfatal=1&fifo_size=50000000" \

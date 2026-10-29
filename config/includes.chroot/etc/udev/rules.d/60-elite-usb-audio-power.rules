@@ -1,0 +1,3 @@
+# EliteLinux: USB-гарнитуры и микрофоны (интерфейс класса USB Audio) не уходят в
+# энергосбережение. После «засыпания» часть гарнитур сбрасывает громкость микрофона.
+ACTION=="add", SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_interface", ATTR{bInterfaceClass}=="01", RUN+="/bin/sh -c 'echo on > /sys%p/../power/control'"

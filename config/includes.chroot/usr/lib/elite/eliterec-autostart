@@ -9,4 +9,5 @@ while [ $i -lt 30 ]; do
         IsStatusNotifierHostRegistered 2>/dev/null | grep -q true && break
     sleep 1; i=$((i + 1))
 done
-exec /opt/eliterec/EliteRec --tray
+# без SESSION_MANAGER: см. elite-no-sm
+exec /usr/lib/elite/elite-no-sm /opt/eliterec/EliteRec --tray

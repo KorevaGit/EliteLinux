@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Кладёт в config/packages.chroot сторонние .deb, которых нет в репозиториях:
-# Zoom (с сайта), EliteRec (из проекта) и EliteSIP (из проекта, с поправленной зависимостью под Debian 13).
+# Zoom и LocalSend (с сайтов), EliteRec (из проекта) и EliteSIP (из проекта, с поправленной зависимостью под Debian 13).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -13,6 +13,13 @@ mkdir -p "$PKG"
 
 if [[ ! -f "$PKG/zoom_amd64.deb" ]]; then
   curl -fL --retry 3 -o "$PKG/zoom_amd64.deb" https://zoom.us/client/latest/zoom_amd64.deb
+fi
+
+# LocalSend — передача файлов между ПК по локальной сети (официальный .deb с GitHub)
+LOCALSEND_VER=1.18.2
+if [[ ! -f "$PKG/localsend_amd64.deb" ]]; then
+  curl -fL --retry 3 -o "$PKG/localsend_amd64.deb" \
+    "https://github.com/localsend/localsend/releases/download/v${LOCALSEND_VER}/LocalSend-${LOCALSEND_VER}-linux-x86-64.deb"
 fi
 
 # EliteSIP собран под Ubuntu 24.04 и требует libicu74, а в Debian 13 есть libicu76.
