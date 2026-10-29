@@ -1,0 +1,4 @@
+# EliteLinux: GoPro (USB 2672:*) подключена — включить её как веб-камеру.
+# 99 и $name: интерфейс сначала называется usb0, затем systemd переименовывает его в
+# enx… (событие move) — службе нужно итоговое имя, иначе она не запускалась.
+ACTION=="add|move", SUBSYSTEM=="net", ATTRS{idVendor}=="2672", TAG+="systemd", ENV{SYSTEMD_WANTS}+="elite-gopro-webcam@$name.service"

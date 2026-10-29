@@ -31,13 +31,25 @@ grep -q '^greeter-show-manual-login=false' /etc/lightdm/lightdm.conf
 
 # лишние на офисном ПК службы и таймеры — меньше нагрузки на диск при старте
 # NetworkManager-wait-online: загрузка не ждёт сети (до 30 с без кабеля)
-for unit in ModemManager.service cups-browsed.service man-db.timer e2scrub_all.timer \
+for unit in ModemManager.service man-db.timer e2scrub_all.timer \
             e2scrub_reap.service NetworkManager-wait-online.service; do
     systemctl disable "$unit" 2>/dev/null || true
 done
 # preload — предзагрузка часто используемых программ в память
 systemctl enable preload.service 2>/dev/null || true
 systemctl enable elite-cups-pdf.service
+
+# сетевые принтеры: cups-browsed сам находит их (mDNS/DNS-SD — IPP Everywhere, AirPrint,
+# общие принтеры других ПК) и добавляет в список без драйверов и без уведомлений
+C=/etc/cups/cups-browsed.conf
+sed -i -e '/^\(BrowseRemoteProtocols\|CreateIPPPrinterQueues\|CreateRemoteCUPSPrinterQueues\) /d' "$C"
+cat >> "$C" <<'CONF'
+# EliteLinux: сетевые принтеры добавляются автоматически
+BrowseRemoteProtocols dnssd cups
+CreateIPPPrinterQueues Driverless
+CreateRemoteCUPSPrinterQueues Yes
+CONF
+systemctl enable cups-browsed.service
 
 # пароль AnyDesk для установщика — только root
 [ -e /etc/elite/anydesk-password ] && chmod 600 /etc/elite/anydesk-password || true

@@ -1,0 +1,25 @@
+#!/bin/sh
+# EliteLinux: после установки загрузчика EliteLinux — первым в порядке загрузки UEFI.
+# На части ноутбуков (Lenovo с A9) после установки ПК грузился не в EliteLinux: в списке
+# загрузки оставались записи от прежней системы (Windows Boot Manager и др.) с разделов,
+# которых после разметки диска уже нет, и прошивка ставила их выше новой записи.
+# Удаляем только записи на разделы, которых нет ни на одном диске (живой Windows на
+# другом диске не трогаем), EliteLinux ставим первым. Запускается в chroot установки.
+command -v efibootmgr >/dev/null && [ -d /sys/firmware/efi/efivars ] || exit 0
+
+ours=$(efibootmgr | sed -n 's/^Boot\([0-9A-F]\{4\}\)\*\? EliteLinux.*/\1/p' | head -1)
+[ -n "$ours" ] || { echo "EliteLinux: записи UEFI EliteLinux нет" >&2; exit 0; }
+
+# записи на разделы GPT, которых больше нет (если список разделов не виден — ничего не удаляем)
+[ -n "$(ls /dev/disk/by-partuuid/ 2>/dev/null)" ] && efibootmgr -v | sed -n 's/^Boot\([0-9A-F]\{4\}\).*HD([0-9]*,GPT,\([0-9a-fA-F-]*\),.*/\1 \2/p' |
+while read -r num uuid; do
+    [ "$num" = "$ours" ] && continue
+    ls /dev/disk/by-partuuid/ | grep -qix "$uuid" && continue
+    echo "EliteLinux: удаляю запись UEFI Boot$num (раздела $uuid нет)"
+    efibootmgr -q -b "$num" -B || true
+done
+
+rest=$(efibootmgr | sed -n 's/^BootOrder: //p' | tr ',' '\n' | grep -vx "$ours" | paste -sd, -)
+efibootmgr -q -o "$ours${rest:+,$rest}" || echo "EliteLinux: порядок загрузки не записан" >&2
+efibootmgr | grep -E '^Boot(Current|Order)|EliteLinux'
+exit 0  # установку из-за порядка загрузки не прерываем

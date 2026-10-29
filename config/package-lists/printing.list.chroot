@@ -10,3 +10,5 @@ libnss-mdns
 printer-driver-cups-pdf
 # уведомление «Очередь печати сброшена»
 libnotify-bin
+# поиск сетевых принтеров и автоматическое добавление (0530-elite-apps)
+cups-browsed
